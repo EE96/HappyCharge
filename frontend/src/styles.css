@@ -48,6 +48,7 @@ Footer {
 
 button {
     background-color: #8f1aa7;
+    color:white;
     align-items: center;
     border-radius: 16px;
     font-size: 17px;
@@ -132,7 +133,6 @@ button span:after {
     text-decoration-thickness: 2px;
     background-color: #AFBBF2;   
 }
-
 
 
 

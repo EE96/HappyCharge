@@ -1,13 +1,11 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
 import Sidebar from './Sidebar/Sidebar';
+import styles from './MapLayout.module.css'
 
 function Map() {
     return (
-    <div>
-        <h1>Testing Testing home page 123</h1> 
+    <div className={ styles.mapLayout }>
         <Sidebar/>
-        <Link to="/profile">User</Link>
     </div>   
     )
 }

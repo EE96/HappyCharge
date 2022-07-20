@@ -3,6 +3,7 @@ import SidebarButton from "./SidebarButton";
 import styles from "./Sidebar.module.css";
 import Filters from "./Filters";
 import Nearby from "./Nearby";
+import RoutePlanner from "./RoutePlanner"
 
 export default function Sidebar() {
 
@@ -20,16 +21,20 @@ export default function Sidebar() {
     }
 
     return (
-        <>
-            <SidebarButton text="Filter" handleClick={makeToggleSubMenu('filters')} />
-            <SidebarButton text="Nearby" handleClick={makeToggleSubMenu('nearby')} />
+        <div className={ styles.overlay }>
+            <SidebarButton text="Filter Chargers" handleClick={makeToggleSubMenu('filters')} />
+            <SidebarButton text="Nearby Chargers" handleClick={makeToggleSubMenu('nearby')} />
+            <SidebarButton text="Route Planning" handleClick={makeToggleSubMenu('routeplanner')}/> 
             {
                 subMenu === 'filters'
                     ? <Filters />
                     : (subMenu === 'nearby'
                         ? <Nearby />
-                        : null)
+                            : (subMenu === 'routeplanner')
+                                ? <RoutePlanner />
+                                    : null)
+
             }
-        </>
+        </div> 
     )
 }

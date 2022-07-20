@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './Sidebar.module.css'
 
 type Props = {
     text: string;
@@ -7,7 +8,7 @@ type Props = {
 
 function SidebarButton({text, handleClick}: Props) {
     return (
-        <button onClick={handleClick}>{text}</button>
+        <button className={ styles.sidebarbutton } onClick={handleClick}>{text}</button>
     )
 }
 
