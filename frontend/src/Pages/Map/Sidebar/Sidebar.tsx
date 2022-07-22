@@ -20,6 +20,9 @@ export default function Sidebar() {
         }
     }
 
+    const [buttonToggle, setButtonToggle] = useState(false);
+
+
     return (
         <div className={ styles.overlay }>
             <SidebarButton text="Filter Chargers" handleClick={makeToggleSubMenu('filters')} />
@@ -27,7 +30,7 @@ export default function Sidebar() {
             <SidebarButton text="Route Planning" handleClick={makeToggleSubMenu('routeplanner')}/> 
             {
                 subMenu === 'filters'
-                    ? <Filters />
+                    ? <Filters /> //also tried to pass in something to change state as props
                     : (subMenu === 'nearby'
                         ? <Nearby />
                             : (subMenu === 'routeplanner')
