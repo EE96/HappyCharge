@@ -1,4 +1,17 @@
-.mapLayout {
-    display: flex;
-    flex-direction: row;
+.container {
+    position:fixed;
+    left:12.5%;
+    top:60px;
+    bottom:40px;
+    width:87.5%;
+    height: 100%;
+}
+
+.mapcontainer {
+    position:fixed;
+    left:12.5%;
+    top:60px;
+    bottom:40px;
+    width:87.5%;
+    height: 100%;
 }
