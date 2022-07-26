@@ -7,7 +7,8 @@ import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 export default function InteractiveMap() {
     
-
+    const [map, setMap] = React.useState(null)
+    
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: "AIzaSyAVrkd6EW6k9m0wIvznJk5Ok6yKGUHJFtY"
       })
@@ -21,7 +22,7 @@ export default function InteractiveMap() {
         lat:55.5,
         lng:-4.3
     }
-    const [map, setMap] = React.useState(null)
+
       
     const onLoad = React.useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds(center);

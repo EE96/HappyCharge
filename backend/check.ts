@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-const data = JSON.parse(fs.readFileSync('NCR.json', 'utf8'));
+const data: ChargeDevice[] = JSON.parse(fs.readFileSync('output.json', 'utf8'));
 // console.log(typeof data)
 // console.log(data.ChargeDevice[1000])
 // console.log(data.ChargeDevice[500])
@@ -9,25 +9,46 @@ const data = JSON.parse(fs.readFileSync('NCR.json', 'utf8'));
 // console.log(data.ChargeDevice[7].ChargeDeviceLocation)
 // console.log(data.ChargeDevice[11].ChargeDeviceLocation)
 
-type TruncatedData = {
-    ChargeDeviceId: string, 
-    ChargeDeviceName: string, 
+export type ChargeDeviceMarkerInfo = {
+    ChargeDeviceId: string,
     ChargeDeviceCoordinates: {
-        Latitude: number, 
+        Latitude: number,
+        Longitude: number
+    },
+}
+
+export type FullChargeDevice = {
+    ChargeDeviceId: string,
+    ChargeDeviceName: string,
+    ChargeDeviceCoordinates: {
+        Latitude: number,
         Longitude: number
     },
     ChargeDeviceShortDescription: string,
-    Connectors: TruncatedConnector[],
+    Connectors: Connector[],
+    Charges: number
 }
 
-type TruncatedConnector = {
+export type ChargeDevice = {
+    ChargeDeviceId: string,
+    ChargeDeviceName: string,
+    ChargeDeviceCoordinates: {
+        Latitude: number,
+        Longitude: number
+    },
+    ChargeDeviceShortDescription: string,
+    Connectors: Connector[],
+    Charges: number
+}
+
+export type Connector = {
     ConnectorId: number,
-    RatedOutputkW: number, 
+    RatedOutputkW: number,
     ChargePointStatus: string,
 }
 
 const parseConnector = (Connector: any) => {
-    let connectorData: TruncatedConnector = {
+    let connectorData: Connector = {
         ConnectorId: Connector.ConnectorId,
         RatedOutputkW: parseInt(Connector.RatedOutputkW),
         ChargePointStatus: Connector.ChargePointStatus
@@ -35,25 +56,56 @@ const parseConnector = (Connector: any) => {
     return connectorData
 }
 
-const parseChargeDevice = (ChargeDevice: any) => {
-    let data: TruncatedData = {
-        ChargeDeviceId: ChargeDevice.ChargeDeviceId,
-        ChargeDeviceName: ChargeDevice.ChargeDeviceName,
+const parseChargeDevice = (c: ChargeDevice) => {
+    let data: ChargeDevice = {
+        ChargeDeviceId: c.ChargeDeviceId,
+        ChargeDeviceName: c.ChargeDeviceName,
         ChargeDeviceCoordinates: {
-            Latitude: parseFloat(ChargeDevice.ChargeDeviceLocation.Latitude), 
-            Longitude: parseFloat(ChargeDevice.ChargeDeviceLocation.Longitude)
+            Latitude: c.ChargeDeviceCoordinates.Latitude,
+            Longitude: c.ChargeDeviceCoordinates.Longitude
         },
-        ChargeDeviceShortDescription: ChargeDevice.ChargeDeviceLocation.LocationShortDescription,
-        Connectors: ChargeDevice.Connector.map((x: any) => parseConnector(x))
+        ChargeDeviceShortDescription: c.ChargeDeviceShortDescription,
+        Connectors: c.Connectors.map((x: any) => parseConnector(x)),
+        Charges: c.Charges
     }
     return data;
 }
 
-// console.log(parseChargeDevice(data.ChargeDevice[1]))
+const makeFullChargeDevice = (c: ChargeDevice) => {
+    let data: FullChargeDevice = {
+        ChargeDeviceId: c.ChargeDeviceId,
+        ChargeDeviceName: c.ChargeDeviceName,
+        ChargeDeviceCoordinates: {
+            Latitude: c.ChargeDeviceCoordinates.Latitude,
+            Longitude: c.ChargeDeviceCoordinates.Longitude
+        },
+        ChargeDeviceShortDescription: c.ChargeDeviceShortDescription,
+        Connectors: c.Connectors.map((x: any) => parseConnector(x)),
+        Charges: 0,
+    }
+    return data;
+}
 
-const output = (data.ChargeDevice as any[]).map((chargeDevice: any) => parseChargeDevice(chargeDevice))
+const makeChargeDeviceMarkerInfo = (c: ChargeDevice) => {
+    let data: ChargeDeviceMarkerInfo = {
+        ChargeDeviceId: c.ChargeDeviceId,
+        ChargeDeviceCoordinates: {
+            Latitude: c.ChargeDeviceCoordinates.Latitude,
+            Longitude: c.ChargeDeviceCoordinates.Longitude
+        },
+    }
+    return data
+}
 
-fs.writeFile('output.json', JSON.stringify(output), function err() {
+// console.log(parseChargeDevice(data[1]))
+
+// const output = data.map((chargeDevice: ChargeDevice) => parseChargeDevice(chargeDevice)) //normal
+// const output = data.map((chargeDevice: ChargeDevice) => makeFullChargeDevice(chargeDevice)) //FullChargeDevices
+const output = data.map((chargeDevice: ChargeDevice) => makeChargeDeviceMarkerInfo(chargeDevice)) //FullChargeDevices
+
+// const output = (parseChargeDevice(data[1]))
+
+fs.writeFile('truncated.json', JSON.stringify(output), function err() {
     if (err) throw err;
 }
 )

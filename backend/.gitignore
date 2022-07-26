@@ -23,3 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 API.txt
 NCR.json
+*.json
+.json*
+*.js
+.js*

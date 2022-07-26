@@ -1,0 +1,56 @@
+.admincontainer {
+    display: flex;
+
+    position:fixed;
+    margin: 0px;
+
+    /* border: 10px solid #8f1aa7; */
+    left: 15%;
+    top: 60px;
+    bottom: 40px;
+    width:70%;
+    height: auto;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.viewertitle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    border-bottom: 5px solid #8f1aa7;
+    background-color: #AFBBF2;
+    font-size: 80px;
+}
+
+
+.reportviewer {
+    display:grid;
+    border: 10px solid #8f1aa7;
+    background-color: #AFBBF2;
+
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.reportcontainer {
+    width:100%;
+    height: 100px;
+    border-bottom: 5px dotted #8f1aa7;
+    background-color: #AFBBF2;
+
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+
+
+
+
+}

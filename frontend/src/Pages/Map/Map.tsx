@@ -2,8 +2,8 @@ import React from 'react'
 import Sidebar from './Sidebar/Sidebar';
 import styles from './MapLayout.module.css'
 import InteractiveMap from './InteractiveMap';
-import {Wrapper, Status} from "@googlemaps/react-wrapper";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+// import {Wrapper, Status} from "@googlemaps/react-wrapper";
+// import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 
 function Map() {

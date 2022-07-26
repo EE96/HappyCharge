@@ -1,8 +1,9 @@
 import React from 'react'
+import MarkerView from '../Map/MarkerView'
 
 function About() {
     return(
-        <h3>about page</h3>
+        <MarkerView />
     )
 }
 
