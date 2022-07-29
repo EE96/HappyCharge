@@ -3,7 +3,8 @@ import MarkerView from '../Map/MarkerView'
 
 function About() {
     return(
-        <MarkerView />
+        // <MarkerView />
+        null
     )
 }
 
