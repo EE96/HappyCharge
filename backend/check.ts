@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-const data: ChargeDevice[] = JSON.parse(fs.readFileSync('output.json', 'utf8'));
+const data: ChargeDevice[] = JSON.parse(fs.readFileSync('fullChargeDevice.json', 'utf8'));
 // console.log(typeof data)
 // console.log(data.ChargeDevice[1000])
 // console.log(data.ChargeDevice[500])
@@ -36,7 +36,7 @@ export type ChargeDevice = {
         Latitude: number,
         Longitude: number
     },
-    ChargeDeviceShortDescription: string,
+    ChargeDeviceShortDescription: string | null,
     Connectors: Connector[],
     Charges: number
 }
@@ -71,20 +71,20 @@ const parseChargeDevice = (c: ChargeDevice) => {
     return data;
 }
 
-const makeFullChargeDevice = (c: ChargeDevice) => {
-    let data: FullChargeDevice = {
-        ChargeDeviceId: c.ChargeDeviceId,
-        ChargeDeviceName: c.ChargeDeviceName,
-        ChargeDeviceCoordinates: {
-            Latitude: c.ChargeDeviceCoordinates.Latitude,
-            Longitude: c.ChargeDeviceCoordinates.Longitude
-        },
-        ChargeDeviceShortDescription: c.ChargeDeviceShortDescription,
-        Connectors: c.Connectors.map((x: any) => parseConnector(x)),
-        Charges: 0,
-    }
-    return data;
-}
+// const makeFullChargeDevice = (c: ChargeDevice) => {
+//     let data: FullChargeDevice = {
+//         ChargeDeviceId: c.ChargeDeviceId,
+//         ChargeDeviceName: c.ChargeDeviceName,
+//         ChargeDeviceCoordinates: {
+//             Latitude: c.ChargeDeviceCoordinates.Latitude,
+//             Longitude: c.ChargeDeviceCoordinates.Longitude
+//         },
+//         ChargeDeviceShortDescription: c.ChargeDeviceShortDescription,
+//         Connectors: c.Connectors.map((x: any) => parseConnector(x)),
+//         Charges: 0,
+//     }
+//     return data;
+// }
 
 const makeChargeDeviceMarkerInfo = (c: ChargeDevice) => {
     let data: ChargeDeviceMarkerInfo = {

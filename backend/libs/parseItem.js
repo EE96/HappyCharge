@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 function parseChargeItem(chargeDevice) {
-    return {
+    var dynamoDevice = {
         ChargeDeviceId: { S: chargeDevice.ChargeDeviceId },
         ChargeDeviceName: { S: chargeDevice.ChargeDeviceName },
         ChargeDeviceCoordinates: {
@@ -10,11 +10,15 @@ function parseChargeItem(chargeDevice) {
                 Longitude: { N: chargeDevice.ChargeDeviceCoordinates.Longitude.toString() }
             }
         },
-        ChargeDeviceShortDescription: { S: chargeDevice.ChargeDeviceShortDescription },
         Connectors: {
             L: chargeDevice.Connectors.map(parseConnector)
-        }
+        },
+        Charges: { N: "0" }
     };
+    if (chargeDevice.ChargeDeviceShortDescription) {
+        dynamoDevice.ChargeDeviceShortDescription = { S: chargeDevice.ChargeDeviceShortDescription };
+    }
+    return dynamoDevice;
 }
 exports["default"] = parseChargeItem;
 function parseConnector(connector) {

@@ -15,11 +15,11 @@ export type DynamoChargeDevice = {
             Longitude: { N: string }
         }
     },
-    ChargeDeviceShortDescription: { S: string },
+    ChargeDeviceShortDescription?: { S: string },
     Connectors: {
         L: DynamoConnector[]
     }
-    Charges?: { N: string }
+    Charges: { N: string }
 }
 
 export type DynamoConnector = {

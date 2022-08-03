@@ -36,56 +36,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var ddb_putitem_1 = require("./ddb_putitem");
-var fs = require("fs");
-var ddb_batchWriteItem_1 = require("./ddb_batchWriteItem");
-var data = JSON.parse(fs.readFileSync('../fullChargeDevice.json', 'utf8'));
-var ITEMS_PER_REQUEST = 1;
-var REQUESTS_PER_BATCH = 1;
-function populateDatabase() {
-    return __awaiter(this, void 0, void 0, function () {
-        var test, batchOfRequests, i, requestItems, j;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    test = data.every(function (t) { return t; });
-                    console.log({ test: test });
-                    if (!test) return [3 /*break*/, 9];
-                    _a.label = 1;
-                case 1:
-                    if (!(data.length > 0)) return [3 /*break*/, 9];
-                    batchOfRequests = [];
-                    i = 0;
-                    _a.label = 2;
-                case 2:
-                    if (!(i < REQUESTS_PER_BATCH && data.length > 0)) return [3 /*break*/, 7];
-                    requestItems = [];
-                    for (j = 0; j < ITEMS_PER_REQUEST && data.length > 0; j++) {
-                        requestItems.push(data.shift());
-                    }
-                    console.log(requestItems);
-                    return [4 /*yield*/, (0, ddb_putitem_1.putItem)(data[0])];
-                case 3:
-                    _a.sent();
-                    return [4 /*yield*/, (0, ddb_putitem_1.putItem)(data.shift())];
-                case 4:
-                    _a.sent();
-                    return [4 /*yield*/, (0, ddb_batchWriteItem_1.batchPutItems)(requestItems)];
-                case 5:
-                    _a.sent();
-                    batchOfRequests.push(requestItems);
-                    _a.label = 6;
-                case 6:
-                    i++;
-                    return [3 /*break*/, 2];
-                case 7: return [4 /*yield*/, Promise.all(batchOfRequests.map(function (requestItems) { return (0, ddb_batchWriteItem_1.batchPutItems)(requestItems); }))];
-                case 8:
-                    _a.sent();
-                    return [3 /*break*/, 1];
-                case 9: return [2 /*return*/];
-            }
-        });
+exports.run = exports.params = void 0;
+// Import required AWS SDK clients and commands for Node.js
+var client_dynamodb_1 = require("@aws-sdk/client-dynamodb");
+var ddbClient_js_1 = require("./ddbClient.js");
+// Set the parameters
+exports.params = {
+    AttributeDefinitions: [
+        {
+            AttributeName: "ChargeDeviceId",
+            AttributeType: "S"
+        }
+    ],
+    KeySchema: [
+        {
+            AttributeName: "ChargeDeviceId",
+            KeyType: "HASH"
+        }
+    ],
+    ProvisionedThroughput: {
+        ReadCapacityUnits: 1,
+        WriteCapacityUnits: 1
+    },
+    TableName: "ChargeDevices",
+    StreamSpecification: {
+        StreamEnabled: false
+    }
+};
+var run = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var data, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, ddbClient_js_1.ddbClient.send(new client_dynamodb_1.CreateTableCommand(exports.params))];
+            case 1:
+                data = _a.sent();
+                console.log("Table Created", data);
+                return [2 /*return*/, data];
+            case 2:
+                err_1 = _a.sent();
+                console.log("Error", err_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
     });
-}
-exports["default"] = populateDatabase;
-populateDatabase();
+}); };
+exports.run = run;
+(0, exports.run)();

@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var fs = require("fs");
-var data = JSON.parse(fs.readFileSync('output.json', 'utf8'));
+var data = JSON.parse(fs.readFileSync('fullChargeDevice.json', 'utf8'));
 var parseConnector = function (Connector) {
     var connectorData = {
         ConnectorId: Connector.ConnectorId,
@@ -19,24 +19,25 @@ var parseChargeDevice = function (c) {
             Longitude: c.ChargeDeviceCoordinates.Longitude
         },
         ChargeDeviceShortDescription: c.ChargeDeviceShortDescription,
-        Connectors: c.Connectors.map(function (x) { return parseConnector(x); })
-    };
-    return data;
-};
-var makeFullChargeDevice = function (c) {
-    var data = {
-        ChargeDeviceId: c.ChargeDeviceId,
-        ChargeDeviceName: c.ChargeDeviceName,
-        ChargeDeviceCoordinates: {
-            Latitude: c.ChargeDeviceCoordinates.Latitude,
-            Longitude: c.ChargeDeviceCoordinates.Longitude
-        },
-        ChargeDeviceShortDescription: c.ChargeDeviceShortDescription,
         Connectors: c.Connectors.map(function (x) { return parseConnector(x); }),
-        Charges: 0
+        Charges: c.Charges
     };
     return data;
 };
+// const makeFullChargeDevice = (c: ChargeDevice) => {
+//     let data: FullChargeDevice = {
+//         ChargeDeviceId: c.ChargeDeviceId,
+//         ChargeDeviceName: c.ChargeDeviceName,
+//         ChargeDeviceCoordinates: {
+//             Latitude: c.ChargeDeviceCoordinates.Latitude,
+//             Longitude: c.ChargeDeviceCoordinates.Longitude
+//         },
+//         ChargeDeviceShortDescription: c.ChargeDeviceShortDescription,
+//         Connectors: c.Connectors.map((x: any) => parseConnector(x)),
+//         Charges: 0,
+//     }
+//     return data;
+// }
 var makeChargeDeviceMarkerInfo = function (c) {
     var data = {
         ChargeDeviceId: c.ChargeDeviceId,

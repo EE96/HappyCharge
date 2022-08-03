@@ -5,7 +5,7 @@ import { ddbClient } from "./ddbClient";
 import { DynamoChargeDevice, DynamoConnector } from "./ddb_putitem";
 
 export default function parseChargeItem(chargeDevice: ChargeDevice): DynamoChargeDevice {
-  return {
+  const dynamoDevice: DynamoChargeDevice = {
     ChargeDeviceId: { S: chargeDevice.ChargeDeviceId },
     ChargeDeviceName: { S: chargeDevice.ChargeDeviceName },
 
@@ -16,13 +16,17 @@ export default function parseChargeItem(chargeDevice: ChargeDevice): DynamoCharg
         Longitude: { N: chargeDevice.ChargeDeviceCoordinates.Longitude.toString() }
       }
     },
-    ChargeDeviceShortDescription: { S: chargeDevice.ChargeDeviceShortDescription },
-
     Connectors: {
       L: chargeDevice.Connectors.map(parseConnector)
     },
-    // Charges: { N: "0"}
+    Charges: { N: "0"}
+  };
+
+  if (chargeDevice.ChargeDeviceShortDescription) {
+    dynamoDevice.ChargeDeviceShortDescription = { S: chargeDevice.ChargeDeviceShortDescription };
   }
+  
+  return dynamoDevice;
 }
 
 
