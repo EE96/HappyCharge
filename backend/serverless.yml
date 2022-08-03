@@ -1,0 +1,78 @@
+service: serverless-test
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-west-2
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: dynamodb:GetItem
+          Resource: '*'
+
+functions:
+  hello:
+    handler: endpoints/handlers.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+  fetchChargeDevice:
+    handler: endpoints/fetchChargeDevice/lambda.handler
+    events:
+      - httpApi:
+          path: /api/chargeDevices/{chargeDeviceId}
+          method: get
+
+
+resources:
+  Resources:
+    Reports:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Reports
+        AttributeDefinitions:
+          - AttributeName: ReportId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ReportId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+    Users:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Users
+        AttributeDefinitions:
+          - AttributeName: UserId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: UserId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+    ChargeDevices:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ChargeDevices
+        AttributeDefinitions:
+          - AttributeName: ChargeDeviceId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ChargeDeviceId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 21
+          WriteCapacityUnits: 21
+	
+custom:
+  serverless-offline:
+    httpPort: 3100
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
