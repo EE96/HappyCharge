@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
 
 import { GoogleMapOptions } from './GoogleMapOptions';
@@ -11,8 +11,18 @@ export const InteractiveMap = ({ handleMarkerClick }: { handleMarkerClick: Handl
     const [zoom, setZoom] = React.useState(13); // initial zoom
     const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
         lat: 55.87633996467739,
-        lng: -4.302982491466489
+        lng: -14.302982491466489
     });
+    
+    
+    useEffect( ()=> {
+    navigator.geolocation.getCurrentPosition(coordinates => setCenter(
+        { 
+        lat: coordinates.coords.latitude, 
+        lng: coordinates.coords.longitude 
+        }))
+    }, []);
+
 
 
     const onIdle = (map: google.maps.Map) => {
