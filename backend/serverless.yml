@@ -25,6 +25,12 @@ functions:
       - httpApi:
           path: /api/chargeDevices/{chargeDeviceId}
           method: get
+  putChargeDevice:
+    handler: endpoints/putChargeDevice/lambda.handler
+    events: 
+      - httpApi:
+          path: /api/chargeDevices
+          method: put
 
 
 resources:

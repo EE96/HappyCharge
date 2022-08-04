@@ -1,26 +1,26 @@
 import { APIGatewayProxyHandler } from "aws-lambda/trigger/api-gateway-proxy";
-import ChargeDeviceStore, { dynamoToChargeDevice } from "../../dynamo/ChargeDeviceStore";
-import { DynamoChargeDevice } from "../../types/ChargeDevice";
 
-export const handler: APIGatewayProxyHandler = async (event) => {
-    if (!event.pathParameters?.chargeDeviceId) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify(
-              {
-                message: "Path param 'chargeDeviceId' missing",
-              },
-              null,
-              2
-            ),
-          };
-    }
-    const params = event.pathParameters;
-    const chargeDeviceId = decodeURIComponent(params.chargeDeviceId!);
+import ChargeDeviceStore from "../../dynamo/ChargeDeviceStore";
 
-    const response = await ChargeDeviceStore.fetch(chargeDeviceId);
+export const handler: APIGatewayProxyHandler = async ({pathParameters}) => {
+  if (!pathParameters?.chargeDeviceId) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify(
+        {
+          message: "Path param 'chargeDeviceId' missing",
+        },
+        null,
+        2
+      ),
+    };
+  }
+  const chargeDeviceId = decodeURIComponent(pathParameters.chargeDeviceId!);
 
-    if (!response?.Item) {
+  try {
+    const chargeDevice = await ChargeDeviceStore.fetch(chargeDeviceId)
+
+    if (!chargeDevice) {
       return {
         statusCode: 404,
         body: JSON.stringify(
@@ -30,17 +30,37 @@ export const handler: APIGatewayProxyHandler = async (event) => {
           null,
           2
         ),
-      };
+      }
     }
 
-    const chargeDevice = dynamoToChargeDevice(response.Item as DynamoChargeDevice)
-
     return {
-    statusCode: 200,
-    body: JSON.stringify(
-      chargeDevice,
-      null,
-      2
-    ),
-  };
+      statusCode: 200,
+      body: JSON.stringify(
+        chargeDevice,
+        null,
+        2
+      ),
+    };
+
+  } catch (err) {
+    console.log(err)
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: "Internal server error" }, null, 2)
+    }
+  }
 };
+
+// type validation = {
+//   pathParams?: Record<string, ParamTypes>,
+//   queryParams?: Record<string, ParamTypes>,
+//   bodyFields?: Record<string, ParamTypes>,
+// }
+
+// type ParamTypes = 'string' | 'number' | 'boolean' | 'nonEmptyString' | 'uuid'
+
+// const test: validation = {
+//   pathParams: {
+//     chargeDeviceId: 'string'
+//   }
+// }

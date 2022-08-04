@@ -15,31 +15,24 @@ export default {
             TableName: "ChargeDevices",
             Item: chargeDeviceToDynamo(item)
         };
-        try {
-            const data = await DynamoClient.send(new PutItemCommand(params));
-            console.log(data);
-            return data;
-        } catch (err) {
-            console.error(err);
-        }
+        return await DynamoClient.send(new PutItemCommand(params));
     },
     fetch: async (chargeDeviceId: string) => {
         const params: GetItemCommandInput = {
             TableName: "ChargeDevices",
             Key: { ChargeDeviceId: { S: chargeDeviceId } }
         };
-        try {
-            const data = await DynamoClient.send(new GetItemCommand(params));
-            console.log(data);
-            return data;
-        } catch (err) {
-            console.error(err);
+        const data = await DynamoClient.send(new GetItemCommand(params));
+        if (!data?.Item) {
+            return null;
         }
+        const chargeDevice = dynamoToChargeDevice(data.Item as DynamoChargeDevice)
+        return chargeDevice;
     },
 }
 
 
-export function chargeDeviceToDynamo(chargeDevice: ChargeDevice): DynamoChargeDevice {
+function chargeDeviceToDynamo(chargeDevice: ChargeDevice): DynamoChargeDevice {
     const dynamoDevice: DynamoChargeDevice = {
         ChargeDeviceId: { S: chargeDevice.ChargeDeviceId },
         ChargeDeviceName: { S: chargeDevice.ChargeDeviceName },
@@ -64,13 +57,13 @@ export function chargeDeviceToDynamo(chargeDevice: ChargeDevice): DynamoChargeDe
     return dynamoDevice;
 }
 
-export function dynamoToChargeDevice(dynamoChargeDevice: DynamoChargeDevice): ChargeDevice {
+function dynamoToChargeDevice(dynamoChargeDevice: DynamoChargeDevice): ChargeDevice {
     return {
         ChargeDeviceId: dynamoChargeDevice.ChargeDeviceId.S,
         Charges: parseInt(dynamoChargeDevice.Charges.N),
         ChargeDeviceName: dynamoChargeDevice.ChargeDeviceName.S,
         ChargeDeviceShortDescription: dynamoChargeDevice.ChargeDeviceShortDescription?.S ?? null,
-        ChargeDeviceCoordinates: { 
+        ChargeDeviceCoordinates: {
             Latitude: parseInt(dynamoChargeDevice.ChargeDeviceCoordinates.M.Latitude.N),
             Longitude: parseInt(dynamoChargeDevice.ChargeDeviceCoordinates.M.Longitude.N)
         },
@@ -79,7 +72,7 @@ export function dynamoToChargeDevice(dynamoChargeDevice: DynamoChargeDevice): Ch
 }
 
 
-export function connectorToDynamo(connector: Connector): DynamoConnector {
+function connectorToDynamo(connector: Connector): DynamoConnector {
     return {
         M: {
             ConnectorId: { S: `${connector.ConnectorId}` },
@@ -89,7 +82,7 @@ export function connectorToDynamo(connector: Connector): DynamoConnector {
     }
 }
 
-export function dynamoToConnector(dynamoConnector: DynamoConnector): Connector {
+function dynamoToConnector(dynamoConnector: DynamoConnector): Connector {
     return {
         ConnectorId: dynamoConnector.M.ConnectorId.S,
         RatedOutputkW: parseInt(dynamoConnector.M.RatedOutputkW.N),
