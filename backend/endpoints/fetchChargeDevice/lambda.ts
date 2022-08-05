@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler } from "aws-lambda/trigger/api-gateway-proxy";
 
-import ChargeDeviceStore from "../../dynamo/ChargeDeviceStore";
+import ChargeDeviceClient from "../../dynamo/ChargeDeviceClient";
 
 export const handler: APIGatewayProxyHandler = async ({pathParameters}) => {
   if (!pathParameters?.chargeDeviceId) {
@@ -18,7 +18,7 @@ export const handler: APIGatewayProxyHandler = async ({pathParameters}) => {
   const chargeDeviceId = decodeURIComponent(pathParameters.chargeDeviceId!);
 
   try {
-    const chargeDevice = await ChargeDeviceStore.fetch(chargeDeviceId)
+    const chargeDevice = await ChargeDeviceClient.fetch(chargeDeviceId)
 
     if (!chargeDevice) {
       return {

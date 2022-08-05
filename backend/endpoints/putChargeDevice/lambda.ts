@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 
-import ChargeDeviceStore from "../../dynamo/ChargeDeviceStore";
+import ChargeDeviceClient from "../../dynamo/ChargeDeviceClient";
 import { ChargeDevice } from "../../types/ChargeDevice";
 
 export const handler: APIGatewayProxyHandler = async ({ body }) => {
@@ -33,7 +33,7 @@ export const handler: APIGatewayProxyHandler = async ({ body }) => {
   }
 
   try {
-    await ChargeDeviceStore.put(chargeDevice)
+    await ChargeDeviceClient.put(chargeDevice)
 
     return {
       statusCode: 200,

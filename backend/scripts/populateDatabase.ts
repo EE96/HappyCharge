@@ -1,6 +1,7 @@
-import { ChargeDevice } from "../types/ChargeDevice";
-import ChargeDeviceStore from "../dynamo/ChargeDeviceStore";
 import * as fs from 'fs';
+
+import { ChargeDevice } from "../types/ChargeDevice";
+import ChargeDeviceClient from "../dynamo/ChargeDeviceClient";
 
 const data: ChargeDevice[] = JSON.parse(fs.readFileSync('./json/fullChargeDevice.json', 'utf8'));
 
@@ -15,7 +16,7 @@ export default async function populateDatabase() {
             }
             
             const timer = new Promise(resolve => setTimeout(resolve, 1050))
-            await Promise.all([...batchOfRequests.map(requestItem => ChargeDeviceStore.put(requestItem)), timer]);
+            await Promise.all([...batchOfRequests.map(requestItem => ChargeDeviceClient.put(requestItem)), timer]);
         }
     }
 

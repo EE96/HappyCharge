@@ -1,6 +1,6 @@
 import { GetItemCommand, GetItemCommandInput, PutItemCommand, PutItemCommandInput } from "@aws-sdk/client-dynamodb";
 
-import { DynamoClient } from "../dynamo/DynamoClient.js";
+import { DynamoClient } from "./DynamoClient";
 import {
     ChargeDevice,
     Connector,
