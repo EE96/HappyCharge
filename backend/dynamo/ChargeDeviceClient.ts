@@ -9,10 +9,10 @@ export default {
         });
     },
 
-    fetch: async (chargeDeviceId: string) => {
+    fetch: async (ChargeDeviceId: string) => {
         const data = await DynamoClient.get({
             TableName: "ChargeDevices",
-            Key: { ChargeDeviceId: chargeDeviceId } 
+            Key: { ChargeDeviceId } 
         });
         if (!data?.Item) {
             return null;

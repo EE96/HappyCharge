@@ -2,10 +2,14 @@ import { APIGatewayProxyHandler } from "aws-lambda/trigger/api-gateway-proxy";
 
 import ChargeDeviceClient from "../../dynamo/ChargeDeviceClient";
 
-export const handler: APIGatewayProxyHandler = async ({pathParameters}) => {
+export const handler: APIGatewayProxyHandler = async ({ pathParameters }) => {
   if (!pathParameters?.chargeDeviceId) {
     return {
       statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify(
         {
           message: "Path param 'chargeDeviceId' missing",
@@ -23,6 +27,10 @@ export const handler: APIGatewayProxyHandler = async ({pathParameters}) => {
     if (!chargeDevice) {
       return {
         statusCode: 404,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+        },
         body: JSON.stringify(
           {
             message: `ChargeDevice with ChargeDeviceId ${chargeDeviceId} not found`,
@@ -35,6 +43,10 @@ export const handler: APIGatewayProxyHandler = async ({pathParameters}) => {
 
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify(
         chargeDevice,
         null,
@@ -46,6 +58,10 @@ export const handler: APIGatewayProxyHandler = async ({pathParameters}) => {
     console.log(err)
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify({ message: "Internal server error" }, null, 2)
     }
   }

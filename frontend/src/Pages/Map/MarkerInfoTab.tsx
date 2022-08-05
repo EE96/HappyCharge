@@ -1,19 +1,19 @@
 import React from 'react'
+
 import styles from './MapLayout.module.css'
 import MarkerView from './MarkerView';
-import { chargers } from "../../chargers";
 
 
 // export default function MarkerInfoTabUnclicked(props) {    // props, not destructured, missing type annotation
-// export default function MarkerInfoTabUnclicked({ markerId }) {   // props, destructured, no type annotation
-export default function MarkerInfoTabUnclicked({ markerId }: { markerId: string | null }) { // destructured props, with type annotation
+// export default function MarkerInfoTabUnclicked({ chargeDeviceId }) {   // props, destructured, no type annotation
+export default function MarkerInfoTab({ chargeDeviceId }: { chargeDeviceId: string | null }) { // destructured props, with type annotation
 
 
 
     return (
-        markerId ?
+        chargeDeviceId ?
             <div className={styles.markerinfotab}>
-                <MarkerView markerId={markerId} />
+                <MarkerView chargeDeviceId={chargeDeviceId} />
                 {/* <p>Marker Clicked </p> */}
             </div>
         :

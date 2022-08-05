@@ -1,11 +1,12 @@
 import axios from 'axios';
-import { ChargeDevice } from './types/ChargeDevice';
+
+import { ChargeDevice } from './types';
 
 export default class Client {
      baseUrl: string
 
-     constructor(host: string = 'localhost:3100') {
-        this.baseUrl = `http://${host}`
+     constructor(offline: boolean = false) {
+        this.baseUrl = offline ? 'http://localhost:3100/' : 'https://oaudoaqa01.execute-api.eu-west-2.amazonaws.com/'
      }
 
      async fetchChargeDevice(chargeDeviceId: string) {

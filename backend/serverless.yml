@@ -19,18 +19,23 @@ functions:
       - httpApi:
           path: /
           method: get
+          cors: true
   fetchChargeDevice:
     handler: endpoints/fetchChargeDevice/lambda.handler
     events:
       - httpApi:
           path: /api/chargeDevices/{chargeDeviceId}
           method: get
+          cors: true
+
   putChargeDevice:
     handler: endpoints/putChargeDevice/lambda.handler
     events: 
       - httpApi:
           path: /api/chargeDevices
           method: put
+          cors: true
+
 
 
 resources:
