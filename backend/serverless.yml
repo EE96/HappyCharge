@@ -5,6 +5,8 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: eu-west-2
+  httpApi: 
+    cors: true
   iam:
     role:
       statements:
@@ -19,14 +21,12 @@ functions:
       - httpApi:
           path: /
           method: get
-          cors: true
   fetchChargeDevice:
     handler: endpoints/fetchChargeDevice/lambda.handler
     events:
       - httpApi:
           path: /api/chargeDevices/{chargeDeviceId}
           method: get
-          cors: true
 
   putChargeDevice:
     handler: endpoints/putChargeDevice/lambda.handler
@@ -34,9 +34,13 @@ functions:
       - httpApi:
           path: /api/chargeDevices
           method: put
-          cors: true
 
-
+  charge:
+    handler: endpoints/charge/lambda.handler
+    events:
+     - httpApi:
+          path: /api/chargeDevices/{chargeDeviceId}/charge
+          method: patch
 
 resources:
   Resources:
