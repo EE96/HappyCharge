@@ -13,6 +13,12 @@ provider:
         - Effect: Allow
           Action: dynamodb:GetItem
           Resource: '*'
+        - Effect: Allow
+          Action: dynamodb:PutItem
+          Resource: "*"
+        - Effect: Allow
+          Action: dynamodb:UpdateItem
+          Resource: "*"
 
 functions:
   hello:
@@ -49,40 +55,40 @@ resources:
       Properties:
         TableName: Reports
         AttributeDefinitions:
-          - AttributeName: ReportId
+          - AttributeName: reportId
             AttributeType: S
         KeySchema:
-          - AttributeName: ReportId
+          - AttributeName: reportId
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 2
-          WriteCapacityUnits: 2
-    Users:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Users
-        AttributeDefinitions:
-          - AttributeName: UserId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: UserId
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 2
-          WriteCapacityUnits: 2
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
     ChargeDevices:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ChargeDevices
         AttributeDefinitions:
-          - AttributeName: ChargeDeviceId
+          - AttributeName: chargeDeviceId
             AttributeType: S
         KeySchema:
-          - AttributeName: ChargeDeviceId
+          - AttributeName: chargeDeviceId
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 21
-          WriteCapacityUnits: 21
+          ReadCapacityUnits: 20
+          WriteCapacityUnits: 20
+    Users:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Users
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 	
 custom:
   serverless-offline:

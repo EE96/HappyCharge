@@ -1,4 +1,3 @@
-import { UpdateCommandInput } from "@aws-sdk/lib-dynamodb";
 import { ChargeDevice } from "../types/ChargeDevice";
 import { DynamoClient } from "./DynamoClient";
 
@@ -10,10 +9,10 @@ export default {
         });
     },
 
-    fetch: async (ChargeDeviceId: string) => {
+    fetch: async (chargeDeviceId: string) => {
         const data = await DynamoClient.get({
             TableName: "ChargeDevices",
-            Key: { ChargeDeviceId } 
+            Key: { chargeDeviceId } 
         });
         if (!data?.Item) {
             return null;
@@ -21,14 +20,14 @@ export default {
         return data.Item as ChargeDevice;
     },
 
-    incrementCharges: async (ChargeDeviceId: string) => {
+    incrementCharges: async (chargeDeviceId: string) => {
         try {
             return await DynamoClient.update({
                 TableName: "ChargeDevices",
-                Key: { ChargeDeviceId },
-                UpdateExpression: `ADD Charges :n`,
-                ConditionExpression: "ChargeDeviceId = :id",
-                ExpressionAttributeValues: { ":n": 1, ":id": ChargeDeviceId },
+                Key: { chargeDeviceId },
+                UpdateExpression: `ADD charges :n`,
+                ConditionExpression: "chargeDeviceId = :id",
+                ExpressionAttributeValues: { ":n": 1, ":id": chargeDeviceId },
             })
         } catch (error) {
             return null;

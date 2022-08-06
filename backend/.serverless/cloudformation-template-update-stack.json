@@ -89,6 +89,12 @@
         "LogGroupName": "/aws/lambda/serverless-test-dev-putChargeDevice"
       }
     },
+    "ChargeLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/serverless-test-dev-charge"
+      }
+    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -152,6 +158,20 @@
                     "dynamodb:GetItem"
                   ],
                   "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:PutItem"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:UpdateItem"
+                  ],
+                  "Resource": "*"
                 }
               ]
             }
@@ -180,7 +200,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-test/dev/1659712439699-2022-08-05T15:13:59.699Z/serverless-test.zip"
+          "S3Key": "serverless/serverless-test/dev/1659802528581-2022-08-06T16:15:28.581Z/serverless-test.zip"
         },
         "Handler": "endpoints/handlers.hello",
         "Runtime": "nodejs14.x",
@@ -205,7 +225,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-test/dev/1659712439699-2022-08-05T15:13:59.699Z/serverless-test.zip"
+          "S3Key": "serverless/serverless-test/dev/1659802528581-2022-08-06T16:15:28.581Z/serverless-test.zip"
         },
         "Handler": "endpoints/fetchChargeDevice/lambda.handler",
         "Runtime": "nodejs14.x",
@@ -230,7 +250,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-test/dev/1659712439699-2022-08-05T15:13:59.699Z/serverless-test.zip"
+          "S3Key": "serverless/serverless-test/dev/1659802528581-2022-08-06T16:15:28.581Z/serverless-test.zip"
         },
         "Handler": "endpoints/putChargeDevice/lambda.handler",
         "Runtime": "nodejs14.x",
@@ -248,41 +268,96 @@
         "PutChargeDeviceLogGroup"
       ]
     },
-    "HelloLambdaVersionChi1xsxa6KcJJAJbwRrwbOJUFIVoRQrvSBjT9rGd0": {
+    "ChargeLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/serverless-test/dev/1659802528581-2022-08-06T16:15:28.581Z/serverless-test.zip"
+        },
+        "Handler": "endpoints/charge/lambda.handler",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "serverless-test-dev-charge",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "ChargeLogGroup"
+      ]
+    },
+    "HelloLambdaVersionLu8b3mydEdyHbrIWvWD4UNtnMhpETLufArrjxFznUUc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "BEcdOg0PCndh7zpS0usG0gY2yPiwKOsGFI8HyLHFiq8="
+        "CodeSha256": "JHGsWwJ3WSiItATZcdigzCoHcSwm5Wrrb1eXQOxIZaE="
       }
     },
-    "FetchChargeDeviceLambdaVersiongap9dWAKnVWOpTC65aB9M8FTzYoLLObaBPO2f6Qqw": {
+    "FetchChargeDeviceLambdaVersionwCVRQ5thwgM5CQMQQkYc4SkNkcXbJgtS3rjbZJxzRcc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "FetchChargeDeviceLambdaFunction"
         },
-        "CodeSha256": "BEcdOg0PCndh7zpS0usG0gY2yPiwKOsGFI8HyLHFiq8="
+        "CodeSha256": "JHGsWwJ3WSiItATZcdigzCoHcSwm5Wrrb1eXQOxIZaE="
       }
     },
-    "PutChargeDeviceLambdaVersionEnyztrysqJAj4mFetCFtKm9gk27v3fg5JL9EbdeUg": {
+    "PutChargeDeviceLambdaVersionVRp94Ly9oCKnthnSbwxe63KyOhk95ELIYZBoimJmsM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PutChargeDeviceLambdaFunction"
         },
-        "CodeSha256": "BEcdOg0PCndh7zpS0usG0gY2yPiwKOsGFI8HyLHFiq8="
+        "CodeSha256": "JHGsWwJ3WSiItATZcdigzCoHcSwm5Wrrb1eXQOxIZaE="
+      }
+    },
+    "ChargeLambdaVersionR9ZwHqwHnzu4Ip19ImjCaWSAqeOTwCRmIr4pT6nc": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ChargeLambdaFunction"
+        },
+        "CodeSha256": "JHGsWwJ3WSiItATZcdigzCoHcSwm5Wrrb1eXQOxIZaE="
       }
     },
     "HttpApi": {
       "Type": "AWS::ApiGatewayV2::Api",
       "Properties": {
         "Name": "dev-serverless-test",
-        "ProtocolType": "HTTP"
+        "ProtocolType": "HTTP",
+        "CorsConfiguration": {
+          "AllowHeaders": [
+            "Content-Type",
+            "X-Amz-Date",
+            "Authorization",
+            "X-Api-Key",
+            "X-Amz-Security-Token",
+            "X-Amz-User-Agent",
+            "X-Amzn-Trace-Id"
+          ],
+          "AllowMethods": [
+            "OPTIONS",
+            "GET",
+            "PUT",
+            "PATCH"
+          ],
+          "AllowOrigins": [
+            "*"
+          ]
+        }
       }
     },
     "HttpApiStage": {
@@ -523,47 +598,100 @@
       },
       "DependsOn": "HttpApiIntegrationPutChargeDevice"
     },
+    "ChargeLambdaPermissionHttpApi": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ChargeLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "HttpApi"
+              },
+              "/*"
+            ]
+          ]
+        }
+      }
+    },
+    "HttpApiIntegrationCharge": {
+      "Type": "AWS::ApiGatewayV2::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ChargeLambdaFunction",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "2.0",
+        "TimeoutInMillis": 6500
+      }
+    },
+    "HttpApiRoutePatchApiChargedevicesChargedeviceidVarCharge": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "RouteKey": "PATCH /api/chargeDevices/{chargeDeviceId}/charge",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "HttpApiIntegrationCharge"
+              }
+            ]
+          ]
+        }
+      },
+      "DependsOn": "HttpApiIntegrationCharge"
+    },
     "Reports": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "TableName": "Reports",
         "AttributeDefinitions": [
           {
-            "AttributeName": "ReportId",
+            "AttributeName": "reportId",
             "AttributeType": "S"
           }
         ],
         "KeySchema": [
           {
-            "AttributeName": "ReportId",
+            "AttributeName": "reportId",
             "KeyType": "HASH"
           }
         ],
         "ProvisionedThroughput": {
-          "ReadCapacityUnits": 2,
-          "WriteCapacityUnits": 2
-        }
-      }
-    },
-    "Users": {
-      "Type": "AWS::DynamoDB::Table",
-      "Properties": {
-        "TableName": "Users",
-        "AttributeDefinitions": [
-          {
-            "AttributeName": "UserId",
-            "AttributeType": "S"
-          }
-        ],
-        "KeySchema": [
-          {
-            "AttributeName": "UserId",
-            "KeyType": "HASH"
-          }
-        ],
-        "ProvisionedThroughput": {
-          "ReadCapacityUnits": 2,
-          "WriteCapacityUnits": 2
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1
         }
       }
     },
@@ -573,19 +701,41 @@
         "TableName": "ChargeDevices",
         "AttributeDefinitions": [
           {
-            "AttributeName": "ChargeDeviceId",
+            "AttributeName": "chargeDeviceId",
             "AttributeType": "S"
           }
         ],
         "KeySchema": [
           {
-            "AttributeName": "ChargeDeviceId",
+            "AttributeName": "chargeDeviceId",
             "KeyType": "HASH"
           }
         ],
         "ProvisionedThroughput": {
-          "ReadCapacityUnits": 21,
-          "WriteCapacityUnits": 21
+          "ReadCapacityUnits": 20,
+          "WriteCapacityUnits": 20
+        }
+      }
+    },
+    "Users": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "TableName": "Users",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "userId",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "userId",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1
         }
       }
     }
@@ -602,7 +752,7 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionChi1xsxa6KcJJAJbwRrwbOJUFIVoRQrvSBjT9rGd0"
+        "Ref": "HelloLambdaVersionLu8b3mydEdyHbrIWvWD4UNtnMhpETLufArrjxFznUUc"
       },
       "Export": {
         "Name": "sls-serverless-test-dev-HelloLambdaFunctionQualifiedArn"
@@ -611,7 +761,7 @@
     "FetchChargeDeviceLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "FetchChargeDeviceLambdaVersiongap9dWAKnVWOpTC65aB9M8FTzYoLLObaBPO2f6Qqw"
+        "Ref": "FetchChargeDeviceLambdaVersionwCVRQ5thwgM5CQMQQkYc4SkNkcXbJgtS3rjbZJxzRcc"
       },
       "Export": {
         "Name": "sls-serverless-test-dev-FetchChargeDeviceLambdaFunctionQualifiedArn"
@@ -620,10 +770,19 @@
     "PutChargeDeviceLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PutChargeDeviceLambdaVersionEnyztrysqJAj4mFetCFtKm9gk27v3fg5JL9EbdeUg"
+        "Ref": "PutChargeDeviceLambdaVersionVRp94Ly9oCKnthnSbwxe63KyOhk95ELIYZBoimJmsM"
       },
       "Export": {
         "Name": "sls-serverless-test-dev-PutChargeDeviceLambdaFunctionQualifiedArn"
+      }
+    },
+    "ChargeLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "ChargeLambdaVersionR9ZwHqwHnzu4Ip19ImjCaWSAqeOTwCRmIr4pT6nc"
+      },
+      "Export": {
+        "Name": "sls-serverless-test-dev-ChargeLambdaFunctionQualifiedArn"
       }
     },
     "HttpApiId": {

@@ -11,7 +11,7 @@ export const InteractiveMap = ({ handleMarkerClick }: { handleMarkerClick: Handl
     const [zoom, setZoom] = React.useState(13); // initial zoom
     const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
         lat: 55.87633996467739,
-        lng: -14.302982491466489
+        lng: -4.302982491466489
     });
     
     
@@ -46,11 +46,11 @@ export const InteractiveMap = ({ handleMarkerClick }: { handleMarkerClick: Handl
                 >
                     {chargers.map(chargeDevice => ( 
                         <Marker
-                            key={chargeDevice.ChargeDeviceId}
-                            id={chargeDevice.ChargeDeviceId}
+                            key={chargeDevice.chargeDeviceId}
+                            id={chargeDevice.chargeDeviceId}
                             position={{
-                                lat: chargeDevice.ChargeDeviceCoordinates.Latitude,
-                                lng: chargeDevice.ChargeDeviceCoordinates.Longitude,
+                                lat: chargeDevice.chargeDeviceCoordinates.latitude,
+                                lng: chargeDevice.chargeDeviceCoordinates.longitude,
                             }} 
                             handleClick={handleMarkerClick}
                         />

@@ -23,7 +23,7 @@ export const handler: APIGatewayProxyHandler = async ({ body }) => {
 
   const chargeDevice: ChargeDevice = JSON.parse(body)
 
-  if (!(typeof chargeDevice.ChargeDeviceId === 'string')) {
+  if (!(typeof chargeDevice.chargeDeviceId === 'string')) {
     return {
       statusCode: 400,
       headers: {
@@ -32,7 +32,7 @@ export const handler: APIGatewayProxyHandler = async ({ body }) => {
       },
       body: JSON.stringify(
         {
-          message: `Invalid body field: chargeDeviceId was a ${typeof chargeDevice.ChargeDeviceId}, must be string`,
+          message: `Invalid body field: chargeDeviceId was a ${typeof chargeDevice.chargeDeviceId}, must be string`,
         },
         null,
         2

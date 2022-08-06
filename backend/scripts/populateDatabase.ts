@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { ChargeDevice } from "../types/ChargeDevice";
 import ChargeDeviceClient from "../dynamo/ChargeDeviceClient";
 
-const data: ChargeDevice[] = JSON.parse(fs.readFileSync('./json/fullChargeDevice.json', 'utf8'));
+const data: ChargeDevice[] = JSON.parse(fs.readFileSync('./json/lowerCaseChargeDevice.json', 'utf8'));
 
 const REQUESTS_PER_BATCH = 20;
 

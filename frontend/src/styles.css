@@ -142,5 +142,9 @@ button span:after {
     background-color: #AFBBF2;   
 }
 
+button:disabled {
+    background: #ccc;
+  }
+
 
 
