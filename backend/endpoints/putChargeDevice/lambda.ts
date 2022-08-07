@@ -2,69 +2,28 @@ import { APIGatewayProxyHandler } from "aws-lambda";
 
 import ChargeDeviceClient from "../../dynamo/ChargeDeviceClient";
 import { ChargeDevice } from "../../types/ChargeDevice";
+import {
+  successResponse,
+  badRequestResponse,
+  serverErrorResponse,
+} from "../../helpers/responses";
 
 export const handler: APIGatewayProxyHandler = async ({ body }) => {
   if (!body) {
-    return {
-      statusCode: 400,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      body: JSON.stringify(
-        {
-          message: "Missing Request Body",
-        },
-        null,
-        2
-      ),
-    };
+    return badRequestResponse("No body")
   }
 
   const chargeDevice: ChargeDevice = JSON.parse(body)
 
-  if (!(typeof chargeDevice.chargeDeviceId === 'string')) {
-    return {
-      statusCode: 400,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      body: JSON.stringify(
-        {
-          message: `Invalid body field: chargeDeviceId was a ${typeof chargeDevice.chargeDeviceId}, must be string`,
-        },
-        null,
-        2
-      ),
-    };
+  if (typeof chargeDevice.chargeDeviceId !== 'string') {
+    return badRequestResponse(`Invalid body field: chargeDeviceId was a ${typeof chargeDevice.chargeDeviceId}, must be string`)
   }
 
   try {
     await ChargeDeviceClient.put(chargeDevice)
-
-    return {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      body: JSON.stringify(
-        chargeDevice,
-        null,
-        2
-      ),
-    };
-
+    return successResponse()
   } catch (err) {
     console.log(err)
-    return {
-      statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      body: JSON.stringify({ message: "Internal server error" }, null, 2)
-    }
+    return serverErrorResponse()
   }
-};
+}
