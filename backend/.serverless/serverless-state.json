@@ -230,7 +230,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1659802528581-2022-08-06T16:15:28.581Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z/serverless-test.zip"
               },
               "Handler": "endpoints/handlers.hello",
               "Runtime": "nodejs14.x",
@@ -255,7 +255,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1659802528581-2022-08-06T16:15:28.581Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z/serverless-test.zip"
               },
               "Handler": "endpoints/fetchChargeDevice/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -280,7 +280,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1659802528581-2022-08-06T16:15:28.581Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z/serverless-test.zip"
               },
               "Handler": "endpoints/putChargeDevice/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -305,7 +305,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1659802528581-2022-08-06T16:15:28.581Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z/serverless-test.zip"
               },
               "Handler": "endpoints/charge/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -323,44 +323,44 @@
               "ChargeLogGroup"
             ]
           },
-          "HelloLambdaVersionLu8b3mydEdyHbrIWvWD4UNtnMhpETLufArrjxFznUUc": {
+          "HelloLambdaVersionqSm2n8htB2ygtiFUz3OnNY7IMgrMCrVgIM6Fycp2OmM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "JHGsWwJ3WSiItATZcdigzCoHcSwm5Wrrb1eXQOxIZaE="
+              "CodeSha256": "S3vTuWeSt9r1hDuCvTvz+YVubqacqlf5klSxCrqIrxg="
             }
           },
-          "FetchChargeDeviceLambdaVersionwCVRQ5thwgM5CQMQQkYc4SkNkcXbJgtS3rjbZJxzRcc": {
+          "FetchChargeDeviceLambdaVersion0iUqr6jD6YEGsUCsX8kOG95LjppREGrAR0WpSqb4wRQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "FetchChargeDeviceLambdaFunction"
               },
-              "CodeSha256": "JHGsWwJ3WSiItATZcdigzCoHcSwm5Wrrb1eXQOxIZaE="
+              "CodeSha256": "S3vTuWeSt9r1hDuCvTvz+YVubqacqlf5klSxCrqIrxg="
             }
           },
-          "PutChargeDeviceLambdaVersionVRp94Ly9oCKnthnSbwxe63KyOhk95ELIYZBoimJmsM": {
+          "PutChargeDeviceLambdaVersionRhUO4Nt6YHyKhRRM9JK2Dsgge56ic3jLaKdJsTXHiY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PutChargeDeviceLambdaFunction"
               },
-              "CodeSha256": "JHGsWwJ3WSiItATZcdigzCoHcSwm5Wrrb1eXQOxIZaE="
+              "CodeSha256": "S3vTuWeSt9r1hDuCvTvz+YVubqacqlf5klSxCrqIrxg="
             }
           },
-          "ChargeLambdaVersionR9ZwHqwHnzu4Ip19ImjCaWSAqeOTwCRmIr4pT6nc": {
+          "ChargeLambdaVersionlwIirluwiWNrKeFo3frK2LoDH5Pj4hEb3ju9e7XDvx0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ChargeLambdaFunction"
               },
-              "CodeSha256": "JHGsWwJ3WSiItATZcdigzCoHcSwm5Wrrb1eXQOxIZaE="
+              "CodeSha256": "S3vTuWeSt9r1hDuCvTvz+YVubqacqlf5klSxCrqIrxg="
             }
           },
           "HttpApi": {
@@ -770,7 +770,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionLu8b3mydEdyHbrIWvWD4UNtnMhpETLufArrjxFznUUc"
+              "Ref": "HelloLambdaVersionqSm2n8htB2ygtiFUz3OnNY7IMgrMCrVgIM6Fycp2OmM"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-HelloLambdaFunctionQualifiedArn"
@@ -779,7 +779,7 @@
           "FetchChargeDeviceLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "FetchChargeDeviceLambdaVersionwCVRQ5thwgM5CQMQQkYc4SkNkcXbJgtS3rjbZJxzRcc"
+              "Ref": "FetchChargeDeviceLambdaVersion0iUqr6jD6YEGsUCsX8kOG95LjppREGrAR0WpSqb4wRQ"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-FetchChargeDeviceLambdaFunctionQualifiedArn"
@@ -788,7 +788,7 @@
           "PutChargeDeviceLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PutChargeDeviceLambdaVersionVRp94Ly9oCKnthnSbwxe63KyOhk95ELIYZBoimJmsM"
+              "Ref": "PutChargeDeviceLambdaVersionRhUO4Nt6YHyKhRRM9JK2Dsgge56ic3jLaKdJsTXHiY"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-PutChargeDeviceLambdaFunctionQualifiedArn"
@@ -797,7 +797,7 @@
           "ChargeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ChargeLambdaVersionR9ZwHqwHnzu4Ip19ImjCaWSAqeOTwCRmIr4pT6nc"
+              "Ref": "ChargeLambdaVersionlwIirluwiWNrKeFo3frK2LoDH5Pj4hEb3ju9e7XDvx0"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-ChargeLambdaFunctionQualifiedArn"
@@ -958,7 +958,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionLu8b3mydEdyHbrIWvWD4UNtnMhpETLufArrjxFznUUc"
+        "versionLogicalId": "HelloLambdaVersionqSm2n8htB2ygtiFUz3OnNY7IMgrMCrVgIM6Fycp2OmM"
       },
       "fetchChargeDevice": {
         "handler": "endpoints/fetchChargeDevice/lambda.handler",
@@ -984,7 +984,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "FetchChargeDeviceLambdaVersionwCVRQ5thwgM5CQMQQkYc4SkNkcXbJgtS3rjbZJxzRcc"
+        "versionLogicalId": "FetchChargeDeviceLambdaVersion0iUqr6jD6YEGsUCsX8kOG95LjppREGrAR0WpSqb4wRQ"
       },
       "putChargeDevice": {
         "handler": "endpoints/putChargeDevice/lambda.handler",
@@ -1010,7 +1010,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "PutChargeDeviceLambdaVersionVRp94Ly9oCKnthnSbwxe63KyOhk95ELIYZBoimJmsM"
+        "versionLogicalId": "PutChargeDeviceLambdaVersionRhUO4Nt6YHyKhRRM9JK2Dsgge56ic3jLaKdJsTXHiY"
       },
       "charge": {
         "handler": "endpoints/charge/lambda.handler",
@@ -1036,7 +1036,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "ChargeLambdaVersionR9ZwHqwHnzu4Ip19ImjCaWSAqeOTwCRmIr4pT6nc"
+        "versionLogicalId": "ChargeLambdaVersionlwIirluwiWNrKeFo3frK2LoDH5Pj4hEb3ju9e7XDvx0"
       }
     },
     "resources": {
@@ -1136,7 +1136,7 @@
     "artifact": "C:\\Users\\elija\\Workspace\\HappyCharge\\HappyCharge\\backend\\.build\\.serverless\\serverless-test.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-test/dev/1659802528581-2022-08-06T16:15:28.581Z",
+    "artifactDirectoryName": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z",
     "artifact": "serverless-test.zip"
   }
 }

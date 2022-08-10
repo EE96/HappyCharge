@@ -8,23 +8,39 @@ import NavBar from './Components/Layout/Navbar';
 import Footer from './Components/Layout/Footer';
 import About from './Pages/About/About';
 import Admin from './Pages/Admin/Admin';
+import LogIn from './Pages/LogIn';
+import Register from './Pages/Register';
 
 const queryClient = new QueryClient()
 
 function App() {
   return (
+
+    // ternary rendering (if logged in)
+
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <NavBar />
         <Routes>
-          <Route path="/" element={<MapPage />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/admin" element={<Admin />} />
+
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/register" element={<Register />} />
+          {/* <Route index element={ */}
+          {/* // <NavBar>
+              // <Routes> */}
+          <Route path="map" element={<MapPage />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="about" element={<About />} />
+          <Route path="admin" element={<Admin />} />
+          <Route index element={<MapPage />} />
+          {/* // </Routes>
+            // </NavBar>
+          // } /> */}
         </Routes>
-        <Footer />
+
+
+        {/* <Footer /> */}
       </BrowserRouter>
-    </QueryClientProvider>
+    </QueryClientProvider >
   )
 }
 

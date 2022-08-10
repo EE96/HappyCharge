@@ -1,10 +1,12 @@
 import React from 'react'
+import PageWrapper from '../../Components/Layout/PageWrapper'
 import MarkerView from '../Map/MarkerView'
 
 function About() {
-    return(
-        // <MarkerView />
-        null
+    return (
+        <PageWrapper>
+            {null}
+        </PageWrapper>
     )
 }
 
