@@ -3,8 +3,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import {
   auth,
-  signUp,
+  firebaseSignUp,
 } from "../firebaseAuth";
+import Client from "../Client/client";
 
 
 // import "./Register.css";
@@ -14,15 +15,14 @@ function Register() {
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate()
 
-
-
-  const register = () => {
-    signUp(email, password);
+  const register = async () => {
+    await firebaseSignUp(email, password);
+    await new Client().signUp(email)
   };
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/dashboard");
+    if (user) navigate("/");
   }, [user, loading]);
   
   return (

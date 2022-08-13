@@ -9,7 +9,20 @@
       "runtime": "nodejs14.x",
       "region": "eu-west-2",
       "httpApi": {
-        "cors": true
+        "cors": {
+          "allowedOrigins": [
+            "*"
+          ],
+          "allowedHeaders": [
+            "Content-Type",
+            "X-Amz-Date",
+            "Authorization",
+            "X-Api-Key",
+            "X-Amz-Security-Token",
+            "X-Amz-User-Agent",
+            "access-token"
+          ]
+        }
       },
       "iam": {
         "role": {
@@ -137,6 +150,18 @@
               "LogGroupName": "/aws/lambda/serverless-test-dev-charge"
             }
           },
+          "SignUpLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-test-dev-signUp"
+            }
+          },
+          "MakeReportLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-test-dev-makeReport"
+            }
+          },
           "IamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -230,7 +255,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
               },
               "Handler": "endpoints/handlers.hello",
               "Runtime": "nodejs14.x",
@@ -255,7 +280,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
               },
               "Handler": "endpoints/fetchChargeDevice/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -280,7 +305,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
               },
               "Handler": "endpoints/putChargeDevice/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -305,7 +330,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
               },
               "Handler": "endpoints/charge/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -323,44 +348,114 @@
               "ChargeLogGroup"
             ]
           },
-          "HelloLambdaVersionqSm2n8htB2ygtiFUz3OnNY7IMgrMCrVgIM6Fycp2OmM": {
+          "SignUpLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
+              },
+              "Handler": "endpoints/signUp/lambda.handler",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "serverless-test-dev-signUp",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "SignUpLogGroup"
+            ]
+          },
+          "MakeReportLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
+              },
+              "Handler": "endpoints/makeReport/lambda.handler",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "serverless-test-dev-makeReport",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "MakeReportLogGroup"
+            ]
+          },
+          "HelloLambdaVersionLRcAbw5X0qvLFf4lR0GCwXyFkPTBuG259NONEiqbm4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "S3vTuWeSt9r1hDuCvTvz+YVubqacqlf5klSxCrqIrxg="
+              "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
             }
           },
-          "FetchChargeDeviceLambdaVersion0iUqr6jD6YEGsUCsX8kOG95LjppREGrAR0WpSqb4wRQ": {
+          "FetchChargeDeviceLambdaVersionTCSy4vJylcb9AGDnXwovINp0swS8XdnhMlqLXskp0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "FetchChargeDeviceLambdaFunction"
               },
-              "CodeSha256": "S3vTuWeSt9r1hDuCvTvz+YVubqacqlf5klSxCrqIrxg="
+              "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
             }
           },
-          "PutChargeDeviceLambdaVersionRhUO4Nt6YHyKhRRM9JK2Dsgge56ic3jLaKdJsTXHiY": {
+          "PutChargeDeviceLambdaVersionWE8aVox0817jp0AWdADOL0onMNfsP6AYmtFW9MOwqk8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PutChargeDeviceLambdaFunction"
               },
-              "CodeSha256": "S3vTuWeSt9r1hDuCvTvz+YVubqacqlf5klSxCrqIrxg="
+              "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
             }
           },
-          "ChargeLambdaVersionlwIirluwiWNrKeFo3frK2LoDH5Pj4hEb3ju9e7XDvx0": {
+          "ChargeLambdaVersion4Z8EjWl7jT9l9MVQmmgGGg645KgjkwsZthnhDvfEPWY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ChargeLambdaFunction"
               },
-              "CodeSha256": "S3vTuWeSt9r1hDuCvTvz+YVubqacqlf5klSxCrqIrxg="
+              "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
+            }
+          },
+          "SignUpLambdaVersionIm75FW18RSSmJBOXjGUjcrgiCYBaV9ZRRDJmCzs1e8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "SignUpLambdaFunction"
+              },
+              "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
+            }
+          },
+          "MakeReportLambdaVersion1SnrenFdlk4PAfRRzo7MWdDqtIIvuOxuqzRbm6VSVs8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "MakeReportLambdaFunction"
+              },
+              "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
             }
           },
           "HttpApi": {
@@ -376,13 +471,14 @@
                   "X-Api-Key",
                   "X-Amz-Security-Token",
                   "X-Amz-User-Agent",
-                  "X-Amzn-Trace-Id"
+                  "access-token"
                 ],
                 "AllowMethods": [
                   "OPTIONS",
                   "GET",
                   "PUT",
-                  "PATCH"
+                  "PATCH",
+                  "POST"
                 ],
                 "AllowOrigins": [
                   "*"
@@ -691,6 +787,150 @@
             },
             "DependsOn": "HttpApiIntegrationCharge"
           },
+          "SignUpLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "SignUpLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationSignUp": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"SignUpLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 6500
+            }
+          },
+          "HttpApiRoutePostApiSignDashup": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "POST /api/sign-up",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationSignUp"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationSignUp"
+          },
+          "MakeReportLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "MakeReportLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationMakeReport": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"MakeReportLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 6500
+            }
+          },
+          "HttpApiRoutePostApiMakeDashreport": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "POST /api/make-report",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationMakeReport"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationMakeReport"
+          },
           "Reports": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
@@ -770,7 +1010,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionqSm2n8htB2ygtiFUz3OnNY7IMgrMCrVgIM6Fycp2OmM"
+              "Ref": "HelloLambdaVersionLRcAbw5X0qvLFf4lR0GCwXyFkPTBuG259NONEiqbm4"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-HelloLambdaFunctionQualifiedArn"
@@ -779,7 +1019,7 @@
           "FetchChargeDeviceLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "FetchChargeDeviceLambdaVersion0iUqr6jD6YEGsUCsX8kOG95LjppREGrAR0WpSqb4wRQ"
+              "Ref": "FetchChargeDeviceLambdaVersionTCSy4vJylcb9AGDnXwovINp0swS8XdnhMlqLXskp0"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-FetchChargeDeviceLambdaFunctionQualifiedArn"
@@ -788,7 +1028,7 @@
           "PutChargeDeviceLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PutChargeDeviceLambdaVersionRhUO4Nt6YHyKhRRM9JK2Dsgge56ic3jLaKdJsTXHiY"
+              "Ref": "PutChargeDeviceLambdaVersionWE8aVox0817jp0AWdADOL0onMNfsP6AYmtFW9MOwqk8"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-PutChargeDeviceLambdaFunctionQualifiedArn"
@@ -797,10 +1037,28 @@
           "ChargeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ChargeLambdaVersionlwIirluwiWNrKeFo3frK2LoDH5Pj4hEb3ju9e7XDvx0"
+              "Ref": "ChargeLambdaVersion4Z8EjWl7jT9l9MVQmmgGGg645KgjkwsZthnhDvfEPWY"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-ChargeLambdaFunctionQualifiedArn"
+            }
+          },
+          "SignUpLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "SignUpLambdaVersionIm75FW18RSSmJBOXjGUjcrgiCYBaV9ZRRDJmCzs1e8"
+            },
+            "Export": {
+              "Name": "sls-serverless-test-dev-SignUpLambdaFunctionQualifiedArn"
+            }
+          },
+          "MakeReportLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "MakeReportLambdaVersion1SnrenFdlk4PAfRRzo7MWdDqtIIvuOxuqzRbm6VSVs8"
+            },
+            "Export": {
+              "Name": "sls-serverless-test-dev-MakeReportLambdaFunctionQualifiedArn"
             }
           },
           "HttpApiId": {
@@ -958,7 +1216,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionqSm2n8htB2ygtiFUz3OnNY7IMgrMCrVgIM6Fycp2OmM"
+        "versionLogicalId": "HelloLambdaVersionLRcAbw5X0qvLFf4lR0GCwXyFkPTBuG259NONEiqbm4"
       },
       "fetchChargeDevice": {
         "handler": "endpoints/fetchChargeDevice/lambda.handler",
@@ -984,7 +1242,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "FetchChargeDeviceLambdaVersion0iUqr6jD6YEGsUCsX8kOG95LjppREGrAR0WpSqb4wRQ"
+        "versionLogicalId": "FetchChargeDeviceLambdaVersionTCSy4vJylcb9AGDnXwovINp0swS8XdnhMlqLXskp0"
       },
       "putChargeDevice": {
         "handler": "endpoints/putChargeDevice/lambda.handler",
@@ -1010,7 +1268,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "PutChargeDeviceLambdaVersionRhUO4Nt6YHyKhRRM9JK2Dsgge56ic3jLaKdJsTXHiY"
+        "versionLogicalId": "PutChargeDeviceLambdaVersionWE8aVox0817jp0AWdADOL0onMNfsP6AYmtFW9MOwqk8"
       },
       "charge": {
         "handler": "endpoints/charge/lambda.handler",
@@ -1036,7 +1294,59 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "ChargeLambdaVersionlwIirluwiWNrKeFo3frK2LoDH5Pj4hEb3ju9e7XDvx0"
+        "versionLogicalId": "ChargeLambdaVersion4Z8EjWl7jT9l9MVQmmgGGg645KgjkwsZthnhDvfEPWY"
+      },
+      "signUp": {
+        "handler": "endpoints/signUp/lambda.handler",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/api/sign-up",
+              "method": "post"
+            },
+            "resolvedMethod": "POST",
+            "resolvedPath": "/api/sign-up"
+          }
+        ],
+        "name": "serverless-test-dev-signUp",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "SignUpLambdaVersionIm75FW18RSSmJBOXjGUjcrgiCYBaV9ZRRDJmCzs1e8"
+      },
+      "makeReport": {
+        "handler": "endpoints/makeReport/lambda.handler",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/api/make-report",
+              "method": "post"
+            },
+            "resolvedMethod": "POST",
+            "resolvedPath": "/api/make-report"
+          }
+        ],
+        "name": "serverless-test-dev-makeReport",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "MakeReportLambdaVersion1SnrenFdlk4PAfRRzo7MWdDqtIIvuOxuqzRbm6VSVs8"
       }
     },
     "resources": {
@@ -1136,7 +1446,7 @@
     "artifact": "C:\\Users\\elija\\Workspace\\HappyCharge\\HappyCharge\\backend\\.build\\.serverless\\serverless-test.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-test/dev/1659900045748-2022-08-07T19:20:45.748Z",
+    "artifactDirectoryName": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z",
     "artifact": "serverless-test.zip"
   }
 }

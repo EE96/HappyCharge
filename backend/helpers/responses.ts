@@ -3,6 +3,7 @@ export const successResponse = (bodyObject: any = "") => ({
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Headers': '*'
     },
     body: JSON.stringify(
         bodyObject,
@@ -17,6 +18,7 @@ export const badRequestResponse = (message: string = "Bad Request") => ({
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Headers': '*'
     },
     body: JSON.stringify(
         {
@@ -32,6 +34,7 @@ export const serverErrorResponse = (message: string = "Internal Server Error") =
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Headers': '*'
     },
     body: JSON.stringify(
         {
@@ -47,6 +50,23 @@ export const notFoundResponse = (message: string = "Not Found") => ({
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Headers': '*'
+    },
+    body: JSON.stringify(
+        {
+            message
+        },
+        null,
+        2
+    ),
+})
+
+export const unauthorisedResponse = (message: string = "Unauthorised") => ({
+    statusCode: 401,
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Headers': '*'
     },
     body: JSON.stringify(
         {

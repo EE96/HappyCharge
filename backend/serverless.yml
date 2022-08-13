@@ -6,7 +6,17 @@ provider:
   runtime: nodejs14.x
   region: eu-west-2
   httpApi: 
-    cors: true
+    cors: 
+      allowedOrigins: '*'
+      allowedHeaders:
+        - Content-Type
+        - X-Amz-Date
+        - Authorization
+        - X-Api-Key
+        - X-Amz-Security-Token
+        - X-Amz-User-Agent
+        - access-token
+
   iam:
     role:
       statements:
@@ -33,20 +43,30 @@ functions:
       - httpApi:
           path: /api/chargeDevices/{chargeDeviceId}
           method: get
-
   putChargeDevice:
     handler: endpoints/putChargeDevice/lambda.handler
     events: 
       - httpApi:
           path: /api/chargeDevices
           method: put
-
   charge:
     handler: endpoints/charge/lambda.handler
     events:
      - httpApi:
           path: /api/chargeDevices/{chargeDeviceId}/charge
           method: patch
+  signUp:
+    handler: endpoints/signUp/lambda.handler
+    events:
+      - httpApi:
+          path: /api/sign-up
+          method: post
+  makeReport:
+    handler: endpoints/makeReport/lambda.handler
+    events:
+      - httpApi:
+          path: /api/make-report
+          method: post
 
 resources:
   Resources:

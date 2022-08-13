@@ -20,8 +20,8 @@ export const handler: APIGatewayProxyHandler = async ({ body }) => {
   }
 
   try {
-    await ChargeDeviceClient.put(chargeDevice)
-    return successResponse()
+    const newChargeDevice = await ChargeDeviceClient.put(chargeDevice)
+    return successResponse(newChargeDevice)
   } catch (err) {
     console.log(err)
     return serverErrorResponse()

@@ -1,9 +1,9 @@
 export type Report = {
-    ReportId: string
-    ChargeDeviceId: string
-    ConnectorId: number
-    UserId: string
-    Timestamp: string
-    Content: string
-    Status: "accepted" | "rejected" | "pending"
+    reportId: string
+    chargeDeviceId: string
+    connectorId: number
+    userId: string
+    timestamp: string
+    content: string
+    status: "accepted" | "rejected" | "pending"
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { auth } from '../firebaseAuth';
-import { ChargeDevice } from './types';
+import { ChargeDevice, Report, User } from './types';
 
 type RequestArgs = {
    url: string
@@ -9,10 +9,12 @@ type RequestArgs = {
    data?: Record<string, any>
 }
 
+const offline = true
+
 export default class Client {
    baseUrl: string
 
-   constructor(offline: boolean = false) {
+   constructor() {
       this.baseUrl = offline ? 'http://localhost:3100/' : 'https://fl01ihyxcb.execute-api.eu-west-2.amazonaws.com/'
    }
 
@@ -49,6 +51,31 @@ export default class Client {
       }
    }
 
+   async signUp(email: string) {
+      const response = await this.makeRequest({
+         url: `${this.baseUrl}api/sign-up`,
+         method: 'post',
+         data: { email }
+      })
+      if (response.status !== 200) {
+         throw Error(response.statusText);
+      }
+      return response.data as User;
+   }
+
+   async makeReport(report: Report) {
+      const response = await this.makeRequest({
+         url: `${this.baseUrl}api/make-report`,
+         method: 'post',
+         data: { report }
+      })
+      if (response.status !== 200) {
+         throw Error(response.statusText);
+      }
+      return response.data as Report;
+   }
+   
+
    /* 
    Can access object parameters like this:
       object.param
@@ -70,9 +97,8 @@ export default class Client {
          url,
          headers: token ? {
             'access-token': token
-         } : {},
+         } : undefined,
          data
       });
    }
-
 }

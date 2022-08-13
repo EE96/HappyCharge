@@ -25,3 +25,18 @@ export type ChargeDeviceMarkerInfo = {
         longitude: number
     },
 }
+
+export type Report = {
+    reportId: string
+    chargeDeviceId: string
+    connectorId: number
+    userId: string
+    timestamp: string
+    content: string
+    status: "accepted" | "rejected" | "pending"
+}
+
+export type User = {
+    userId: string,
+    email: string
+}

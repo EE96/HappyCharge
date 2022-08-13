@@ -3,10 +3,11 @@ import { DynamoClient } from "./DynamoClient";
 
 export default {
     put: async (Item: ChargeDevice) => {
-        return await DynamoClient.put({
+        await DynamoClient.put({
             TableName: "ChargeDevices",
             Item
         });
+        return Item;
     },
 
     fetch: async (chargeDeviceId: string) => {
