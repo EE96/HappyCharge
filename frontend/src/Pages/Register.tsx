@@ -10,10 +10,10 @@ import Client from "../Client/client";
 
 // import "./Register.css";
 function Register() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [user, loading, error] = useAuthState(auth);
-    const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate()
 
   const register = async () => {
     await firebaseSignUp(email, password);
@@ -24,7 +24,7 @@ function Register() {
     if (loading) return;
     if (user) navigate("/");
   }, [user, loading]);
-  
+
   return (
     <div className="register">
       <div className="register__container">

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { auth } from '../firebaseAuth';
-import { ChargeDevice, Report, User } from './types';
+import { ChargeDevice, PartialReport, Report, User } from './types';
 
 type RequestArgs = {
    url: string
@@ -63,11 +63,11 @@ export default class Client {
       return response.data as User;
    }
 
-   async makeReport(report: Report) {
+   async makeReport(report: PartialReport) {
       const response = await this.makeRequest({
-         url: `${this.baseUrl}api/make-report`,
+         url: `${this.baseUrl}api/report`,
          method: 'post',
-         data: { report }
+         data: report
       })
       if (response.status !== 200) {
          throw Error(response.statusText);

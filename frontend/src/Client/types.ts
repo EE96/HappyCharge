@@ -26,6 +26,12 @@ export type ChargeDeviceMarkerInfo = {
     },
 }
 
+export type PartialReport = {
+    content: string,
+    chargeDeviceId: string,
+    connectorId: string
+  }
+
 export type Report = {
     reportId: string
     chargeDeviceId: string

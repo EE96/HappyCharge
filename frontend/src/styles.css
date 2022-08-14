@@ -105,14 +105,14 @@ button span:after {
     margin-left:5%;
 }
 
-.profilelink {
+/* .profilelink {
     text-decoration: none;
     color: white;
     background: #8f1aa7;
     display:block;
-}
+} */
 
-.profilebutton {
+.signoutbutton {
     border-right: auto;
 }
 

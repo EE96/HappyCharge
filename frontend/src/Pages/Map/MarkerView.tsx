@@ -4,6 +4,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Client from "../../Client/client";
 
 import styles from "./MapLayout.module.css";
+import Connector from "./Connector";
+import ReportContent from "./ReportContent";
 
 export default function MarkerView({ chargeDeviceId }: { chargeDeviceId: string }) {
 
@@ -15,14 +17,24 @@ export default function MarkerView({ chargeDeviceId }: { chargeDeviceId: string 
 
     const [hasCharged, setHasCharged] = useState(false)
 
+    const [reportConnectorId, setReportConnectorId] = useState<string | null>(null)
+
+    const handleConnectorClick = (newConnectorId: string) => {
+        if (newConnectorId === reportConnectorId) {
+            setReportConnectorId(null);
+        } else {
+            setReportConnectorId(newConnectorId);
+        }
+    };
+
 
     //dont need react query for this one, just need to know that the request was successful
     const handleChargeClick = async () => {
-        try{
+        try {
             setHasCharged(true)
             await new Client().chargeAtDevice(chargeDeviceId)
             queryClient.invalidateQueries(['markerData', chargeDeviceId])
-        } catch{
+        } catch {
             console.log("Unsuccessful")
             setHasCharged(false)
         }
@@ -59,15 +71,25 @@ export default function MarkerView({ chargeDeviceId }: { chargeDeviceId: string 
             <div className={styles.markerviewbody}>
                 <ul>
                     {connectors.map((connector) => (
-                        <li>{connector.ratedOutputkW}kW ---- {connector.chargePointStatus}</li>
+                        <Connector
+                            connectorId={connector.connectorId}
+                            ratedOutputkW={connector.ratedOutputkW}
+                            chargePointStatus={connector.chargePointStatus}
+                            handleClick={handleConnectorClick}
+                        />
                     ))}
                 </ul>
 
             </div>
             <div className={styles.markerviewbuttons}>
                 <button onClick={handleChargeClick} disabled={hasCharged}>Charge Here</button>
-                <button>Submit Fault Report</button>
+
             </div>
+
+            {
+                reportConnectorId &&
+                <ReportContent {...{ chargeDeviceId, connectorId: reportConnectorId }} />
+            }
         </div>
     )
 }

@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+
 import logo from '../../images/logo2.jpg';
+import { logout } from '../../firebaseAuth';
+
 
 function NavBar() {
     return (
@@ -28,13 +31,9 @@ function NavBar() {
                     </Link>
                 </span>
             </button>
-            <button className="profilebutton">
+            <button className="signoutbutton" onClick={logout}>
                 <span>
-                    <Link
-                        to="/profile"
-                        className="profilelink">
-                        User Profile
-                    </Link>
+                        Sign Out
                 </span>
             </button>
         </nav>

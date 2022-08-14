@@ -65,7 +65,7 @@ functions:
     handler: endpoints/makeReport/lambda.handler
     events:
       - httpApi:
-          path: /api/make-report
+          path: /api/report
           method: post
 
 resources:
