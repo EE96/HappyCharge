@@ -9,7 +9,7 @@ type RequestArgs = {
    data?: Record<string, any>
 }
 
-const offline = true
+const offline = false
 
 export default class Client {
    baseUrl: string

@@ -17,7 +17,7 @@
     top:60px;
     right:12.5%;
     bottom:40px;
-    width:75%;
+    width:67.5%;
 }
 
 
@@ -30,9 +30,8 @@
     flex-direction: column;
     background-color: #AFBBF2;
     
-    border: 5px solid black;
     width: 300px;
-    height: fit-content;
+    height: 100%;
     overflow-y: scroll;
     z-index: 2000000;
 }
@@ -78,7 +77,6 @@ li {
     background-color: #AFBBF2;
     display: flex;
     flex-direction: column;
-    width: 300px;
     max-width: 20%;
     height: 87%; 
     padding: 10px;

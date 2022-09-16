@@ -212,7 +212,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
+          "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
         },
         "Handler": "endpoints/handlers.hello",
         "Runtime": "nodejs14.x",
@@ -237,7 +237,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
+          "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
         },
         "Handler": "endpoints/fetchChargeDevice/lambda.handler",
         "Runtime": "nodejs14.x",
@@ -262,7 +262,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
+          "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
         },
         "Handler": "endpoints/putChargeDevice/lambda.handler",
         "Runtime": "nodejs14.x",
@@ -287,7 +287,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
+          "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
         },
         "Handler": "endpoints/charge/lambda.handler",
         "Runtime": "nodejs14.x",
@@ -312,7 +312,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
+          "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
         },
         "Handler": "endpoints/signUp/lambda.handler",
         "Runtime": "nodejs14.x",
@@ -337,7 +337,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-test/dev/1660423910617-2022-08-13T20:51:50.617Z/serverless-test.zip"
+          "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
         },
         "Handler": "endpoints/makeReport/lambda.handler",
         "Runtime": "nodejs14.x",
@@ -355,64 +355,64 @@
         "MakeReportLogGroup"
       ]
     },
-    "HelloLambdaVersionLRcAbw5X0qvLFf4lR0GCwXyFkPTBuG259NONEiqbm4": {
+    "HelloLambdaVersionGMdziypSweEASeJVANjSDNja4cOIm50rngZVd3so": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
+        "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
       }
     },
-    "FetchChargeDeviceLambdaVersionTCSy4vJylcb9AGDnXwovINp0swS8XdnhMlqLXskp0": {
+    "FetchChargeDeviceLambdaVersionYwmP7h1Ngs0DOCJL5dJV1x8oyjASlIghASBsqh7FGc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "FetchChargeDeviceLambdaFunction"
         },
-        "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
+        "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
       }
     },
-    "PutChargeDeviceLambdaVersionWE8aVox0817jp0AWdADOL0onMNfsP6AYmtFW9MOwqk8": {
+    "PutChargeDeviceLambdaVersion4ELqwwGrkQf013F5jmqwUOnkWSI4PEhWrxYTJCUyRKM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PutChargeDeviceLambdaFunction"
         },
-        "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
+        "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
       }
     },
-    "ChargeLambdaVersion4Z8EjWl7jT9l9MVQmmgGGg645KgjkwsZthnhDvfEPWY": {
+    "ChargeLambdaVersionbXExXZYLoSG8lMzwIyzDLQnIqJBgpIlJsXE9k8BjMQU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ChargeLambdaFunction"
         },
-        "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
+        "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
       }
     },
-    "SignUpLambdaVersionIm75FW18RSSmJBOXjGUjcrgiCYBaV9ZRRDJmCzs1e8": {
+    "SignUpLambdaVersionokUchvsl5CYRlw1EpVVPxsMpKsSmBuJqBG54RBVxo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "SignUpLambdaFunction"
         },
-        "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
+        "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
       }
     },
-    "MakeReportLambdaVersion1SnrenFdlk4PAfRRzo7MWdDqtIIvuOxuqzRbm6VSVs8": {
+    "MakeReportLambdaVersionK51l9J8TwXYLUQS5flRaKCBrwkVwDFmahCu2bGnA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MakeReportLambdaFunction"
         },
-        "CodeSha256": "7XZUwz5/xYQ/OIRc+E/DqRoBYXHIGzyb08hHUgKUxR0="
+        "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
       }
     },
     "HttpApi": {
@@ -885,13 +885,13 @@
         "TimeoutInMillis": 6500
       }
     },
-    "HttpApiRoutePostApiMakeDashreport": {
+    "HttpApiRoutePostApiReport": {
       "Type": "AWS::ApiGatewayV2::Route",
       "Properties": {
         "ApiId": {
           "Ref": "HttpApi"
         },
-        "RouteKey": "POST /api/make-report",
+        "RouteKey": "POST /api/report",
         "Target": {
           "Fn::Join": [
             "/",
@@ -985,7 +985,7 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionLRcAbw5X0qvLFf4lR0GCwXyFkPTBuG259NONEiqbm4"
+        "Ref": "HelloLambdaVersionGMdziypSweEASeJVANjSDNja4cOIm50rngZVd3so"
       },
       "Export": {
         "Name": "sls-serverless-test-dev-HelloLambdaFunctionQualifiedArn"
@@ -994,7 +994,7 @@
     "FetchChargeDeviceLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "FetchChargeDeviceLambdaVersionTCSy4vJylcb9AGDnXwovINp0swS8XdnhMlqLXskp0"
+        "Ref": "FetchChargeDeviceLambdaVersionYwmP7h1Ngs0DOCJL5dJV1x8oyjASlIghASBsqh7FGc"
       },
       "Export": {
         "Name": "sls-serverless-test-dev-FetchChargeDeviceLambdaFunctionQualifiedArn"
@@ -1003,7 +1003,7 @@
     "PutChargeDeviceLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PutChargeDeviceLambdaVersionWE8aVox0817jp0AWdADOL0onMNfsP6AYmtFW9MOwqk8"
+        "Ref": "PutChargeDeviceLambdaVersion4ELqwwGrkQf013F5jmqwUOnkWSI4PEhWrxYTJCUyRKM"
       },
       "Export": {
         "Name": "sls-serverless-test-dev-PutChargeDeviceLambdaFunctionQualifiedArn"
@@ -1012,7 +1012,7 @@
     "ChargeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ChargeLambdaVersion4Z8EjWl7jT9l9MVQmmgGGg645KgjkwsZthnhDvfEPWY"
+        "Ref": "ChargeLambdaVersionbXExXZYLoSG8lMzwIyzDLQnIqJBgpIlJsXE9k8BjMQU"
       },
       "Export": {
         "Name": "sls-serverless-test-dev-ChargeLambdaFunctionQualifiedArn"
@@ -1021,7 +1021,7 @@
     "SignUpLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SignUpLambdaVersionIm75FW18RSSmJBOXjGUjcrgiCYBaV9ZRRDJmCzs1e8"
+        "Ref": "SignUpLambdaVersionokUchvsl5CYRlw1EpVVPxsMpKsSmBuJqBG54RBVxo"
       },
       "Export": {
         "Name": "sls-serverless-test-dev-SignUpLambdaFunctionQualifiedArn"
@@ -1030,7 +1030,7 @@
     "MakeReportLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MakeReportLambdaVersion1SnrenFdlk4PAfRRzo7MWdDqtIIvuOxuqzRbm6VSVs8"
+        "Ref": "MakeReportLambdaVersionK51l9J8TwXYLUQS5flRaKCBrwkVwDFmahCu2bGnA"
       },
       "Export": {
         "Name": "sls-serverless-test-dev-MakeReportLambdaFunctionQualifiedArn"

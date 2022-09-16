@@ -40,10 +40,6 @@ export default function MarkerView({ chargeDeviceId }: { chargeDeviceId: string 
         }
     }
 
-    //charge click boolean - make that one of the array parameters that triggers a re-render, useref? 
-
-
-
     if (!data) {
         return (
             <div className={styles.markerviewcontainer}>
@@ -83,7 +79,6 @@ export default function MarkerView({ chargeDeviceId }: { chargeDeviceId: string 
             </div>
             <div className={styles.markerviewbuttons}>
                 <button onClick={handleChargeClick} disabled={hasCharged}>Charge Here</button>
-
             </div>
 
             {
