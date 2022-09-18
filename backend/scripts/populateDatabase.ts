@@ -14,7 +14,6 @@ export default async function populateDatabase() {
 
                 batchOfRequests.push(data.shift()!);
             }
-            
             const timer = new Promise(resolve => setTimeout(resolve, 1050))
             await Promise.all([...batchOfRequests.map(requestItem => ChargeDeviceClient.put(requestItem)), timer]);
         }

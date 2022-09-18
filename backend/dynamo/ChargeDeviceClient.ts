@@ -10,6 +10,13 @@ export default {
         return Item;
     },
 
+    delete: async (chargeDeviceId: string) => {
+        await DynamoClient.delete({
+            TableName: "ChargeDevices",
+            Key: { chargeDeviceId }
+        });
+    },
+
     fetch: async (chargeDeviceId: string) => {
         const data = await DynamoClient.get({
             TableName: "ChargeDevices",

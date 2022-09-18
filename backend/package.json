@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile-tests": "tsc -p tsconfig.test.json",
+    "test": "npm run compile-tests && mocha --recursive"
   },
   "keywords": [],
   "author": "",
@@ -15,11 +16,17 @@
     "@aws-sdk/lib-dynamodb": "^3.32.0",
     "@aws-sdk/node-http-handler": "^3.32.0",
     "@aws-sdk/types": "^3.32.0",
+    "@types/chai": "^4.3.3",
+    "@types/mocha": "^9.1.1",
     "@types/uuid": "^8.3.4",
     "axios": "^0.27.2",
+    "chai": "^4.3.6",
     "firebase-admin": "^11.0.1",
     "jest": "^26.6.3",
+    "mocha": "^10.0.0",
     "node-fetch": "^2.6",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^9.1.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

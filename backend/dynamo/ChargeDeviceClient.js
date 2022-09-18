@@ -45,7 +45,22 @@ exports["default"] = {
                         TableName: "ChargeDevices",
                         Item: Item
                     })];
-                case 1: return [2 /*return*/, _a.sent()];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/, Item];
+            }
+        });
+    }); },
+    "delete": function (chargeDeviceId) { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, DynamoClient_1.DynamoClient["delete"]({
+                        TableName: "ChargeDevices",
+                        Key: { chargeDeviceId: chargeDeviceId }
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
             }
         });
     }); },
@@ -73,7 +88,7 @@ exports["default"] = {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     return [4 /*yield*/, DynamoClient_1.DynamoClient.update({
-                            TableName: "chargeDevices",
+                            TableName: "ChargeDevices",
                             Key: { chargeDeviceId: chargeDeviceId },
                             UpdateExpression: "ADD charges :n",
                             ConditionExpression: "chargeDeviceId = :id",
