@@ -19,6 +19,13 @@ export default {
             return null;
         }
         return data.Item as Report;
-    }
+    },
+
+    delete: async (reportId: string) => {
+        await DynamoClient.delete({
+            TableName: "Reports",
+            Key: { reportId }
+        });
+    },
 
 }

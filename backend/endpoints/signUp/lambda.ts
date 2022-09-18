@@ -9,6 +9,8 @@ import {
 import { auth } from "../../helpers/firebase"
 import UserClient from "../../dynamo/UserClient";
 
+type RequestBody = { email: string };
+
 export const handler: APIGatewayProxyHandler = async ({ body, headers }) => {
 
     if (!body) {
@@ -19,7 +21,7 @@ export const handler: APIGatewayProxyHandler = async ({ body, headers }) => {
         return unauthorisedResponse()
     }
 
-    const userDetails: { email: string } = JSON.parse(body)
+    const userDetails: RequestBody = JSON.parse(body)
 
     if (typeof userDetails.email !== 'string') {
         return badRequestResponse(`Invalid body field: email was a ${typeof userDetails.email}, must be string`)
@@ -28,7 +30,8 @@ export const handler: APIGatewayProxyHandler = async ({ body, headers }) => {
     const accessToken = headers["access-token"]
 
     try {
-        const decodedToken = await auth.verifyIdToken(accessToken)        
+        const decodedToken = await auth.verifyIdToken(accessToken) 
+           
         const { uid } = decodedToken;
 
         try {

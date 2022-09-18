@@ -1,0 +1,75 @@
+.navbar {
+    display:flex;
+    align-items: center;
+    height:60px;
+    width:100%;
+    background-color: #AFBBF2;
+    padding: 30px;
+    gap:180px;
+  }
+
+.logo {
+    height: 50px;
+}
+
+Footer {
+    display: flex;
+    gap: 1260px;
+    height:40px;
+    background-color: #AFBBF2;
+    padding: 10px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-top: 5px solid #8f1aa7;
+
+}
+
+.homelink {
+    text-decoration: none;
+    color: white;
+    background: #8f1aa7;
+    display:block;
+}
+
+.homebutton {
+    margin-left:5%;
+}
+
+/* .profilelink {
+    text-decoration: none;
+    color: white;
+    background: #8f1aa7;
+    display:block;
+} */
+
+.signoutbutton {
+    border-right: auto;
+}
+
+.aboutlink {
+    text-decoration: none;
+    color: white;
+    background: #8f1aa7;
+    display:block;
+}
+
+.aboutbutton {
+    border-right: auto;
+}
+
+.title {
+    display:flex;
+    margin-left:30px;
+    background-color:#AFBBF2 ;
+
+}
+
+.titletext {
+    margin-top: 13px;
+    text-decoration: overline;
+    text-decoration-style:wavy;
+    text-decoration-thickness: 2px;
+    background-color: #AFBBF2;   
+}

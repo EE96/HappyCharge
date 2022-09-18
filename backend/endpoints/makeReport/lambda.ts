@@ -11,7 +11,7 @@ import {
 import { Report } from '../../types/Report'
 import { auth } from "../../helpers/firebase"
 
-type PartialReport = {
+export type PartialReport = {
   content: string,
   chargeDeviceId: string,
   connectorId: string
