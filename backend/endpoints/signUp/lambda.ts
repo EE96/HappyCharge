@@ -7,7 +7,7 @@ import {
     unauthorisedResponse
 } from "../../helpers/responses";
 import { auth } from "../../helpers/firebase"
-import UserClient from "../../dynamo/UserClient";
+import UserClient from "../../aws/dynamo/UserClient";
 
 type RequestBody = { email: string };
 

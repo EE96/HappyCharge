@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler } from "aws-lambda/trigger/api-gateway-proxy";
 
-import ChargeDeviceClient from "../../dynamo/ChargeDeviceClient";
+import ChargeDeviceClient from "../../aws/dynamo/ChargeDeviceClient";
 import {
   successResponse,
   badRequestResponse,

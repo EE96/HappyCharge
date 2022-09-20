@@ -1,9 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import {
-    // GoogleAuthProvider,
     getAuth,
     signInWithEmailAndPassword,
-    // sendPasswordResetEmail,
     signOut,
     createUserWithEmailAndPassword
 } from "firebase/auth";
@@ -23,16 +21,6 @@ export const logInWithEmailAndPassword = async (email: string, password: string)
     }
   };
 
-//   export const sendPasswordReset = async (email: string) => {
-//     try {
-//       await sendPasswordResetEmail(auth, email);
-//       alert("Password reset link sent!");
-//     } catch (err: any) {
-//       console.error(err);
-//       alert(err.message);
-//     }
-//   };
-
   export const logout = () => {
     signOut(authFrontend);
   };
@@ -40,8 +28,4 @@ export const logInWithEmailAndPassword = async (email: string, password: string)
   export const firebaseSignUp = async (email: string, password: string) => {
     return await createUserWithEmailAndPassword(authFrontend, email, password)
   }
-
-  // export const
-
-
   

@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { v4 as uuid } from "uuid";
 
-import ReportClient from "../../dynamo/ReportClient";
+import ReportClient from "../../aws/dynamo/ReportClient";
 import {
   successResponse,
   badRequestResponse,

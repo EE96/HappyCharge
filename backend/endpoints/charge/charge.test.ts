@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 
 
 import { ChargeDevice } from '../../types/ChargeDevice';
-import ChargeDeviceClient from '../../dynamo/ChargeDeviceClient';
+import ChargeDeviceClient from '../../aws/dynamo/ChargeDeviceClient';
 
 describe('chargeChargeDevice', function () {
     it('should increment the charges to the correct chargeDevice in the database', async function () {

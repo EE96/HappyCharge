@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import axios from "axios";
 
 import { authFrontend, firebaseSignUp } from "../../helpers/firebaseFrontend";
-import UserClient from "../../dynamo/UserClient";
+import UserClient from "../../aws/dynamo/UserClient";
 import { User } from "../../types/User";
 import { auth } from "../../helpers/firebase";
 
@@ -25,7 +25,7 @@ describe('signUp', function () {
         await auth.deleteUser(userId)
     })
 
-    it('should create a user with firebase before adding them to aws database', async function () {
+    it('adds a firebase user to aws database', async function () {
         const response = await axios.post(
             "http://localhost:3100/api/sign-up",
             { email },

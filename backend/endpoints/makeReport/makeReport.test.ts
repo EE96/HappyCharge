@@ -1,13 +1,14 @@
 import { v4 as uuid } from "uuid";
 import { expect } from 'chai'
+import axios from "axios";
 
 import { authFrontend, logInWithEmailAndPassword, logout } from "../../helpers/firebaseFrontend";
-import ReportClient from "../../dynamo/ReportClient";
+import ReportClient from "../../aws/dynamo/ReportClient";
 import { PartialReport } from './lambda'
-import axios from "axios";
 import { Report } from "../../types/Report";
 
 describe('makeReport', function () {
+
     it('should create a report and add it to the database', async function () {
 
         await logInWithEmailAndPassword("test@test.com", "pppppp");
@@ -38,7 +39,9 @@ describe('makeReport', function () {
         
         expect(partCheck).deep.equal(partReport);
 
-        await ReportClient.delete(response.data.reportId)
-        await logout()
+        afterEach(async function () {
+            await ReportClient.delete(response.data.reportId)
+          await logout()  
+          })
     });
 });

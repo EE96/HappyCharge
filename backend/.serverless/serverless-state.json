@@ -47,6 +47,15 @@
                 "dynamodb:UpdateItem"
               ],
               "Resource": "*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "sns:Publish"
+              ],
+              "Resource": {
+                "Ref": "ReportSubmittedTopic"
+              }
             }
           ]
         }
@@ -162,6 +171,12 @@
               "LogGroupName": "/aws/lambda/serverless-test-dev-makeReport"
             }
           },
+          "SendReportSubmittedEmailLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-test-dev-sendReportSubmittedEmail"
+            }
+          },
           "IamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -227,6 +242,31 @@
                       },
                       {
                         "$ref": "$[\"service\"][\"provider\"][\"iam\"][\"role\"][\"statements\"][2]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iam\"][\"role\"][\"statements\"][3]"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "sqs:ReceiveMessage",
+                          "sqs:DeleteMessage",
+                          "sqs:GetQueueAttributes"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::GetAtt": [
+                              "ReportSubmittedQueue",
+                              "Arn"
+                            ]
+                          },
+                          {
+                            "Fn::GetAtt": [
+                              "ReportSubmittedDeadLetterQueue",
+                              "Arn"
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }
@@ -255,7 +295,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1663588809472-2022-09-19T12:00:09.472Z/serverless-test.zip"
               },
               "Handler": "endpoints/handlers.hello",
               "Runtime": "nodejs14.x",
@@ -280,7 +320,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1663588809472-2022-09-19T12:00:09.472Z/serverless-test.zip"
               },
               "Handler": "endpoints/fetchChargeDevice/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -305,7 +345,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1663588809472-2022-09-19T12:00:09.472Z/serverless-test.zip"
               },
               "Handler": "endpoints/putChargeDevice/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -330,7 +370,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1663588809472-2022-09-19T12:00:09.472Z/serverless-test.zip"
               },
               "Handler": "endpoints/charge/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -355,7 +395,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1663588809472-2022-09-19T12:00:09.472Z/serverless-test.zip"
               },
               "Handler": "endpoints/signUp/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -380,7 +420,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z/serverless-test.zip"
+                "S3Key": "serverless/serverless-test/dev/1663588809472-2022-09-19T12:00:09.472Z/serverless-test.zip"
               },
               "Handler": "endpoints/makeReport/lambda.handler",
               "Runtime": "nodejs14.x",
@@ -398,64 +438,99 @@
               "MakeReportLogGroup"
             ]
           },
-          "HelloLambdaVersionGMdziypSweEASeJVANjSDNja4cOIm50rngZVd3so": {
+          "SendReportSubmittedEmailLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-test/dev/1663588809472-2022-09-19T12:00:09.472Z/serverless-test.zip"
+              },
+              "Handler": "endpoints/sendReportSubmittedEmail/lambda.handler",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "serverless-test-dev-sendReportSubmittedEmail",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "SendReportSubmittedEmailLogGroup"
+            ]
+          },
+          "HelloLambdaVersionBP4lCIMTWz171mfwplD0rrxPS0hEHcvyz7k8Zus8M": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
+              "CodeSha256": "JpwEnEHz7DxPJQJQ5RLKLqNAnL51RoBnkrwJFyP/6vc="
             }
           },
-          "FetchChargeDeviceLambdaVersionYwmP7h1Ngs0DOCJL5dJV1x8oyjASlIghASBsqh7FGc": {
+          "FetchChargeDeviceLambdaVersionfUZgh81PFiggpGk2SCmD2Uteh9V2XMRAFkFn0x11ZM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "FetchChargeDeviceLambdaFunction"
               },
-              "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
+              "CodeSha256": "JpwEnEHz7DxPJQJQ5RLKLqNAnL51RoBnkrwJFyP/6vc="
             }
           },
-          "PutChargeDeviceLambdaVersion4ELqwwGrkQf013F5jmqwUOnkWSI4PEhWrxYTJCUyRKM": {
+          "PutChargeDeviceLambdaVersionDT4QHRkg27jwQmXM3rFbp7wNPQ4MZhD075N9kGfPJc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PutChargeDeviceLambdaFunction"
               },
-              "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
+              "CodeSha256": "JpwEnEHz7DxPJQJQ5RLKLqNAnL51RoBnkrwJFyP/6vc="
             }
           },
-          "ChargeLambdaVersionbXExXZYLoSG8lMzwIyzDLQnIqJBgpIlJsXE9k8BjMQU": {
+          "ChargeLambdaVersiong56OnV7riJPN3R23F5uTzz7MANdQbNr0AVHMMhfy8gc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ChargeLambdaFunction"
               },
-              "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
+              "CodeSha256": "JpwEnEHz7DxPJQJQ5RLKLqNAnL51RoBnkrwJFyP/6vc="
             }
           },
-          "SignUpLambdaVersionokUchvsl5CYRlw1EpVVPxsMpKsSmBuJqBG54RBVxo": {
+          "SignUpLambdaVersionzzOd2g70VWbe3svVP7xGmwoTfKI2aoK9trxUlvlDQvI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SignUpLambdaFunction"
               },
-              "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
+              "CodeSha256": "JpwEnEHz7DxPJQJQ5RLKLqNAnL51RoBnkrwJFyP/6vc="
             }
           },
-          "MakeReportLambdaVersionK51l9J8TwXYLUQS5flRaKCBrwkVwDFmahCu2bGnA": {
+          "MakeReportLambdaVersionHGWv7ZIcf74xSIErHyRRFuZaOagSX1BKyBE8P3yc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "MakeReportLambdaFunction"
               },
-              "CodeSha256": "8vf3UsZ4mAsP5vC6kVUMM4SsQ4WmRzyNOvd69xfRVIk="
+              "CodeSha256": "JpwEnEHz7DxPJQJQ5RLKLqNAnL51RoBnkrwJFyP/6vc="
+            }
+          },
+          "SendReportSubmittedEmailLambdaVersionok4NB6MDtC2clTKSPyWItH7iH6xSVIK4JWkpSlAMtg": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "SendReportSubmittedEmailLambdaFunction"
+              },
+              "CodeSha256": "JpwEnEHz7DxPJQJQ5RLKLqNAnL51RoBnkrwJFyP/6vc="
             }
           },
           "HttpApi": {
@@ -996,6 +1071,108 @@
                 "WriteCapacityUnits": 1
               }
             }
+          },
+          "ReportSubmittedTopic": {
+            "Type": "AWS::SNS::Topic",
+            "Properties": {
+              "TopicName": "ReportSubmitted"
+            }
+          },
+          "SendReportSubmittedEmailEventSourceMappingSQSReportSubmittedQueue": {
+            "Type": "AWS::Lambda::EventSourceMapping",
+            "Properties": {
+              "BatchSize": 1,
+              "MaximumBatchingWindowInSeconds": 0,
+              "EventSourceArn": {
+                "Fn::GetAtt": [
+                  "ReportSubmittedQueue",
+                  "Arn"
+                ]
+              },
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "SendReportSubmittedEmailLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Enabled": "True"
+            }
+          },
+          "ReportSubmittedDeadLetterQueue": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {
+              "QueueName": "serverless-test-dev-SendReportSubmittedEmailReportSubmittedDeadLetterQueue"
+            }
+          },
+          "ReportSubmittedQueue": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {
+              "QueueName": "serverless-test-dev-SendReportSubmittedEmailReportSubmittedQueue",
+              "RedrivePolicy": {
+                "deadLetterTargetArn": {
+                  "Fn::GetAtt": [
+                    "ReportSubmittedDeadLetterQueue",
+                    "Arn"
+                  ]
+                },
+                "maxReceiveCount": 5
+              }
+            }
+          },
+          "ReportSubmittedQueuePolicy": {
+            "Type": "AWS::SQS::QueuePolicy",
+            "Properties": {
+              "PolicyDocument": {
+                "Version": "2012-10-17",
+                "Id": "serverless-test-dev-SendReportSubmittedEmailReportSubmittedQueue",
+                "Statement": [
+                  {
+                    "Sid": "serverless-test-dev-SendReportSubmittedEmailReportSubmittedSid",
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": "sns.amazonaws.com"
+                    },
+                    "Action": "SQS:SendMessage",
+                    "Resource": {
+                      "Fn::GetAtt": [
+                        "ReportSubmittedQueue",
+                        "Arn"
+                      ]
+                    },
+                    "Condition": {
+                      "ArnEquals": {
+                        "aws:SourceArn": [
+                          {
+                            "Ref": "ReportSubmittedTopic"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "Queues": [
+                {
+                  "Ref": "ReportSubmittedQueue"
+                }
+              ]
+            }
+          },
+          "SubscribeReportSubmittedTopic": {
+            "Type": "AWS::SNS::Subscription",
+            "Properties": {
+              "Endpoint": {
+                "Fn::GetAtt": [
+                  "ReportSubmittedQueue",
+                  "Arn"
+                ]
+              },
+              "Protocol": "sqs",
+              "TopicArn": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ReportSubmittedQueuePolicy\"][\"Properties\"][\"PolicyDocument\"][\"Statement\"][0][\"Condition\"][\"ArnEquals\"][\"aws:SourceArn\"][0]"
+              },
+              "RawMessageDelivery": false
+            }
           }
         },
         "Outputs": {
@@ -1010,7 +1187,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionGMdziypSweEASeJVANjSDNja4cOIm50rngZVd3so"
+              "Ref": "HelloLambdaVersionBP4lCIMTWz171mfwplD0rrxPS0hEHcvyz7k8Zus8M"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-HelloLambdaFunctionQualifiedArn"
@@ -1019,7 +1196,7 @@
           "FetchChargeDeviceLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "FetchChargeDeviceLambdaVersionYwmP7h1Ngs0DOCJL5dJV1x8oyjASlIghASBsqh7FGc"
+              "Ref": "FetchChargeDeviceLambdaVersionfUZgh81PFiggpGk2SCmD2Uteh9V2XMRAFkFn0x11ZM"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-FetchChargeDeviceLambdaFunctionQualifiedArn"
@@ -1028,7 +1205,7 @@
           "PutChargeDeviceLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PutChargeDeviceLambdaVersion4ELqwwGrkQf013F5jmqwUOnkWSI4PEhWrxYTJCUyRKM"
+              "Ref": "PutChargeDeviceLambdaVersionDT4QHRkg27jwQmXM3rFbp7wNPQ4MZhD075N9kGfPJc"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-PutChargeDeviceLambdaFunctionQualifiedArn"
@@ -1037,7 +1214,7 @@
           "ChargeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ChargeLambdaVersionbXExXZYLoSG8lMzwIyzDLQnIqJBgpIlJsXE9k8BjMQU"
+              "Ref": "ChargeLambdaVersiong56OnV7riJPN3R23F5uTzz7MANdQbNr0AVHMMhfy8gc"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-ChargeLambdaFunctionQualifiedArn"
@@ -1046,7 +1223,7 @@
           "SignUpLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SignUpLambdaVersionokUchvsl5CYRlw1EpVVPxsMpKsSmBuJqBG54RBVxo"
+              "Ref": "SignUpLambdaVersionzzOd2g70VWbe3svVP7xGmwoTfKI2aoK9trxUlvlDQvI"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-SignUpLambdaFunctionQualifiedArn"
@@ -1055,10 +1232,19 @@
           "MakeReportLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "MakeReportLambdaVersionK51l9J8TwXYLUQS5flRaKCBrwkVwDFmahCu2bGnA"
+              "Ref": "MakeReportLambdaVersionHGWv7ZIcf74xSIErHyRRFuZaOagSX1BKyBE8P3yc"
             },
             "Export": {
               "Name": "sls-serverless-test-dev-MakeReportLambdaFunctionQualifiedArn"
+            }
+          },
+          "SendReportSubmittedEmailLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "SendReportSubmittedEmailLambdaVersionok4NB6MDtC2clTKSPyWItH7iH6xSVIK4JWkpSlAMtg"
+            },
+            "Export": {
+              "Name": "sls-serverless-test-dev-SendReportSubmittedEmailLambdaFunctionQualifiedArn"
             }
           },
           "HttpApiId": {
@@ -1188,7 +1374,8 @@
     },
     "plugins": [
       "serverless-plugin-typescript",
-      "serverless-offline"
+      "serverless-offline",
+      "@agiledigital/serverless-sns-sqs-lambda"
     ],
     "pluginsData": {},
     "functions": {
@@ -1216,7 +1403,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionGMdziypSweEASeJVANjSDNja4cOIm50rngZVd3so"
+        "versionLogicalId": "HelloLambdaVersionBP4lCIMTWz171mfwplD0rrxPS0hEHcvyz7k8Zus8M"
       },
       "fetchChargeDevice": {
         "handler": "endpoints/fetchChargeDevice/lambda.handler",
@@ -1242,7 +1429,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "FetchChargeDeviceLambdaVersionYwmP7h1Ngs0DOCJL5dJV1x8oyjASlIghASBsqh7FGc"
+        "versionLogicalId": "FetchChargeDeviceLambdaVersionfUZgh81PFiggpGk2SCmD2Uteh9V2XMRAFkFn0x11ZM"
       },
       "putChargeDevice": {
         "handler": "endpoints/putChargeDevice/lambda.handler",
@@ -1268,7 +1455,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "PutChargeDeviceLambdaVersion4ELqwwGrkQf013F5jmqwUOnkWSI4PEhWrxYTJCUyRKM"
+        "versionLogicalId": "PutChargeDeviceLambdaVersionDT4QHRkg27jwQmXM3rFbp7wNPQ4MZhD075N9kGfPJc"
       },
       "charge": {
         "handler": "endpoints/charge/lambda.handler",
@@ -1294,7 +1481,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "ChargeLambdaVersionbXExXZYLoSG8lMzwIyzDLQnIqJBgpIlJsXE9k8BjMQU"
+        "versionLogicalId": "ChargeLambdaVersiong56OnV7riJPN3R23F5uTzz7MANdQbNr0AVHMMhfy8gc"
       },
       "signUp": {
         "handler": "endpoints/signUp/lambda.handler",
@@ -1320,7 +1507,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "SignUpLambdaVersionokUchvsl5CYRlw1EpVVPxsMpKsSmBuJqBG54RBVxo"
+        "versionLogicalId": "SignUpLambdaVersionzzOd2g70VWbe3svVP7xGmwoTfKI2aoK9trxUlvlDQvI"
       },
       "makeReport": {
         "handler": "endpoints/makeReport/lambda.handler",
@@ -1346,7 +1533,34 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "MakeReportLambdaVersionK51l9J8TwXYLUQS5flRaKCBrwkVwDFmahCu2bGnA"
+        "versionLogicalId": "MakeReportLambdaVersionHGWv7ZIcf74xSIErHyRRFuZaOagSX1BKyBE8P3yc"
+      },
+      "sendReportSubmittedEmail": {
+        "handler": "endpoints/sendReportSubmittedEmail/lambda.handler",
+        "events": [
+          {
+            "snsSqs": {
+              "name": "ReportSubmitted",
+              "topicArn": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ReportSubmittedQueuePolicy\"][\"Properties\"][\"PolicyDocument\"][\"Statement\"][0][\"Condition\"][\"ArnEquals\"][\"aws:SourceArn\"][0]"
+              },
+              "batchSize": 1
+            }
+          }
+        ],
+        "name": "serverless-test-dev-sendReportSubmittedEmail",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "SendReportSubmittedEmailLambdaVersionok4NB6MDtC2clTKSPyWItH7iH6xSVIK4JWkpSlAMtg"
       }
     },
     "resources": {
@@ -1416,6 +1630,12 @@
               "WriteCapacityUnits": 1
             }
           }
+        },
+        "ReportSubmittedTopic": {
+          "Type": "AWS::SNS::Topic",
+          "Properties": {
+            "TopicName": "ReportSubmitted"
+          }
         }
       },
       "Outputs": {}
@@ -1446,7 +1666,7 @@
     "artifact": "C:\\Users\\elija\\Workspace\\HappyCharge\\HappyCharge\\backend\\.build\\.serverless\\serverless-test.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-test/dev/1662108752639-2022-09-02T08:52:32.639Z",
+    "artifactDirectoryName": "serverless/serverless-test/dev/1663588809472-2022-09-19T12:00:09.472Z",
     "artifact": "serverless-test.zip"
   }
 }
