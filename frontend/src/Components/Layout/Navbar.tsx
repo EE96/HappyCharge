@@ -3,35 +3,36 @@ import { Link } from 'react-router-dom';
 
 import logo from '../../images/logo2.jpg';
 import { logout } from '../../firebaseAuth';
+import styles  from './Layout.module.css'
 
 
 function NavBar() {
     return (
-        <nav className='navbar'>
-            <div className="title">
-                <h1 className="title--text">HappyCharge</h1>
-                <img src={logo} alt="logo" className="logo"></img>
+        <nav className={ styles.navbar }>
+            <div className= { styles.title }>
+                <h1 className={ styles.titletext }>HappyCharge</h1>
+                <img src={logo} alt="logo" className={ styles.logo }></img>
             </div>
-            <button className="homebutton">
+            <button className={ styles.homebutton }>
                 <span>
                     <Link
                         to="/map"
-                        className='homelink'>
+                        className={ styles.homelink }>
                         Map
                     </Link>
                 </span>
             </button>
-            <button className="aboutbutton">
+            <button className={ styles.aboutbutton }>
                 <span>
 
                     <Link
                         to="/about"
-                        className="aboutlink">
+                        className={ styles.aboutlink }>
                         About
                     </Link>
                 </span>
             </button>
-            <button className="signoutbutton" onClick={logout}>
+            <button className={ styles.signoutbutton } onClick={logout}>
                 <span>
                         Sign Out
                 </span>

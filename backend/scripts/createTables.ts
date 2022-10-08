@@ -1,6 +1,6 @@
 // Import required AWS SDK clients and commands for Node.js
 import { CreateTableCommand } from "@aws-sdk/client-dynamodb";
-import { DynamoClient } from "../dynamo/DynamoClient.js";
+import { DynamoClient } from "../aws/dynamo/DynamoClient.js";
 
 // Set the parameters
 export const chargeDeviceParams = {

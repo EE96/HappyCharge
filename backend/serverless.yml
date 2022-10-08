@@ -29,6 +29,9 @@ provider:
         - Effect: Allow
           Action: dynamodb:UpdateItem
           Resource: "*"
+        - Effect: Allow
+          Action: sns:Publish
+          Resource: !Ref ReportSubmittedTopic
 
 functions:
   hello:
@@ -67,6 +70,13 @@ functions:
       - httpApi:
           path: /api/report
           method: post
+  sendReportSubmittedEmail:
+    handler: endpoints/sendReportSubmittedEmail/lambda.handler
+    events:
+      - snsSqs:
+          name: ReportSubmitted
+          topicArn: !Ref ReportSubmittedTopic
+          batchSize: 1
 
 resources:
   Resources:
@@ -109,11 +119,21 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    ReportSubmittedTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ReportSubmitted
 	
 custom:
   serverless-offline:
     httpPort: 3100
+#   customDomain:
+#     domainName: 'happycharge.co.uk'
+#     certificateName: 'happycharge.co.uk'
+#     basePath: ''
 
 plugins:
   - serverless-plugin-typescript
   - serverless-offline
+  # - serverless-domain-manager
+  - "@agiledigital/serverless-sns-sqs-lambda"
