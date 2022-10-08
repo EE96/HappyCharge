@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { v4 as uuid } from "uuid";
 
-import ReportClient from "../../dynamo/ReportClient";
+import ReportClient from "../../aws/dynamo/ReportClient";
 import {
   successResponse,
   badRequestResponse,
@@ -11,7 +11,7 @@ import {
 import { Report } from '../../types/Report'
 import { auth } from "../../helpers/firebase"
 
-type PartialReport = {
+export type PartialReport = {
   content: string,
   chargeDeviceId: string,
   connectorId: string
