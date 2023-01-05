@@ -1,4 +1,4 @@
-# HappyCharge (masters project)
+# HappyCharge 
 
 HappyCharge is a proof-of-concept project for EV owners to traverse a map showing all NCR-registered charging stations in the UK. This project was submitted for completion of my Software Development Masters, and now serves as a sandbox to test and learn new AWS services, with periodic refactoring and building out of new features. 
 
